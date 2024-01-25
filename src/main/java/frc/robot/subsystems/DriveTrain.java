@@ -61,7 +61,7 @@ public  class DriveTrain extends SubsystemBase {
   }
 
   public double handleDeadzone(double value, double deadZone) {
-    if (Math.abs(value) < deadzone) {
+    if (Math.abs(value) < deadZone) {
       return 0;
     }
 
