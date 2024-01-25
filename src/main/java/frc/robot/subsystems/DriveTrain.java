@@ -1,21 +1,22 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class DriveTrain extends SubsystemBase {
-  WPI_VictorSPX LeftFrontMotor = new WPI_VictorSPX(Constants.MotorConstants.LeftFrontMotor);
-  WPI_VictorSPX LeftBackMotor = new WPI_VictorSPX(Constants.MotorConstants.LeftBackMotor);
-  WPI_VictorSPX RightFrontMotor = new WPI_VictorSPX(Constants.MotorConstants.RightFrontMotor);
-  WPI_VictorSPX RightBackMotor = new WPI_VictorSPX(Constants.MotorConstants.RightBackMotor);
+public  class DriveTrain extends SubsystemBase {
+  private final CANSparkMax leftFrontMotor = new CANSparkMax(Constants.MotorConstants.LeftFrontMotor, MotorType.kBrushless);
+  private final CANSparkMax leftBackMotor = new CANSparkMax(Constants.MotorConstants.LeftBackMotor, MotorType.kBrushless);
+  private final CANSparkMax rightFrontMotor = new CANSparkMax(Constants.MotorConstants.RightFrontMotor, MotorType.kBrushless);
+  private final CANSparkMax rightBackMotor = new CANSparkMax(Constants.MotorConstants.RightBackMotor, MotorType.kBrushless);
   
-  MotorControllerGroup LeftMotors = new MotorControllerGroup(LeftBackMotor,LeftFrontMotor);
-  MotorControllerGroup RightMotors = new MotorControllerGroup(RightBackMotor,RightFrontMotor);
   
   public DriveTrain() {
+    // set back motors to follow the front ones.
+    leftBackMotor.follow(leftFrontMotor);
+    rightBackMotor.follow(rightFrontMotor);
   }
 
   public void arcadeDrive (double rotate,double drive) {
@@ -25,23 +26,31 @@ public class DriveTrain extends SubsystemBase {
 
     if (drive >= 0) {
       if (rotate >= 0) {
-        LeftMotors.set(maximum);
-        RightMotors.set(difference);
+        leftFrontMotor.set(maximum);
+        rightFrontMotor.set(difference);
       
       } else {
-        LeftMotors.set(total);
-        RightMotors.set(maximum);
+        leftFrontMotor.set(total);
+        rightFrontMotor.set(maximum);
       } 
     } else { 
       if (rotate >= 0) {
-        LeftMotors.set(total);
-        RightMotors.set(-maximum);
+        leftFrontMotor.set(total);
+        rightFrontMotor.set(-maximum);
       } else {
-        LeftMotors.set(-maximum);
-        RightMotors.set(difference);
+        leftFrontMotor.set(-maximum);
+        rightFrontMotor.set(difference);
       }
     }
 
+  }
+
+  public CANSparkMax getRightLeader() {
+    return this.rightFrontMotor;
+  }
+
+  public CANSparkMax getLeftLeader() {
+    return this.leftFrontMotor;
   }
   
   @Override
