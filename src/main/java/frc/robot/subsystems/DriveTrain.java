@@ -51,9 +51,9 @@ public  class DriveTrain extends SubsystemBase {
 
     // apply piecewise logic
     if (position > 0) {
-      return part1 + Constants.DriveTrain.TORQUE_RESITANCE_THRESHOLD;
+      return part1 + Constants.DriveTrainConstants.TORQUE_RESITANCE_THRESHOLD;
     } else if (position < 0) {
-      return part1 - Constants.DriveTrain.TORQUE_RESITANCE_THRESHOLD;
+      return part1 - Constants.DriveTrainConstants.TORQUE_RESITANCE_THRESHOLD;
     }
 
     // else joystick position is 0 so return 0
