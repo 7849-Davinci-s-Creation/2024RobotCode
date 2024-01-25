@@ -19,7 +19,7 @@ public  class DriveTrain extends SubsystemBase {
     rightBackMotor.follow(rightFrontMotor);
   }
 
-  public void arcadeDrive (double rotate,double drive) {
+  public void arcadeDrive(double rotate,double drive) {
     double maximum = Math.max(Math.abs(rotate), Math.abs(drive));
     double total = drive + rotate;
     double difference = drive - rotate;
@@ -43,6 +43,29 @@ public  class DriveTrain extends SubsystemBase {
       }
     }
 
+  }
+
+  public double applyCurve(double position) { 
+    // first part of equation is the same so extract to variable
+    double part1 = (1 - Constants.DriveTrainConstants.TORQUE_RESITANCE_THRESHOLD) * Math.pow(position, 3); 
+
+    // apply piecewise logic
+    if (position > 0) {
+      return part1 + Constants.DriveTrain.TORQUE_RESITANCE_THRESHOLD;
+    } else if (position < 0) {
+      return part1 - Constants.DriveTrain.TORQUE_RESITANCE_THRESHOLD;
+    }
+
+    // else joystick position is 0 so return 0
+    return 0;
+  }
+
+  public double handleDeadzone(double value, double deadZone) {
+    if (Math.abs(value) < deadzone) {
+      return 0;
+    }
+
+    return value;
   }
 
   public CANSparkMax getRightLeader() {
