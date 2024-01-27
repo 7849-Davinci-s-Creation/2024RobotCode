@@ -5,8 +5,9 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import lib.DashboardConfiguration;
 
-public  class DriveTrain extends SubsystemBase {
+public  class DriveTrain extends SubsystemBase implements DashboardConfiguration {
   private final CANSparkMax leftFrontMotor = new CANSparkMax(Constants.MotorConstants.LeftFrontMotor, MotorType.kBrushless);
   private final CANSparkMax leftBackMotor = new CANSparkMax(Constants.MotorConstants.LeftBackMotor, MotorType.kBrushless);
   private final CANSparkMax rightFrontMotor = new CANSparkMax(Constants.MotorConstants.RightFrontMotor, MotorType.kBrushless);
@@ -83,5 +84,10 @@ public  class DriveTrain extends SubsystemBase {
 
   @Override
   public void simulationPeriodic() {
+  }
+
+  @Override
+  public void configureDashboard() {
+    
   }
 }

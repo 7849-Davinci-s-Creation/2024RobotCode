@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import lib.DashboardManager;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,6 +22,11 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    // add subsytems to dashboard managers list (ex: Dashboard.addSubsystemDashboard(subsytem); )
+    
+    // Configure Subsystems dashboard configurations
+    DashboardManager.configureDashboards();
   }
 
   /**
