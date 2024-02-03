@@ -18,6 +18,9 @@ public class Drive extends Command {
     @Override
     public void initialize() {
         driveTrain.arcadeDrive(0, 0);
+        driveTrain.setBoosted(false);
+        driveTrain.setCreeping(false);
+        driveTrain.setNormal(true);
     }
 
     @Override
@@ -26,7 +29,27 @@ public class Drive extends Command {
                 ps4Controller.getLeftY(), Constants.DriveTrainConstants.JOYSTICK_DEADZONE_DRIVE);
         double rotate = driveTrain.handleDeadzone(
                 ps4Controller.getRightX(), Constants.DriveTrainConstants.JOYSTICK_DEADZONE_ROTATE);
-        driveTrain.arcadeDrive(driveTrain.applyCurve(rotate), driveTrain.applyCurve(drive));
+
+        if (ps4Controller.getHID().getL1Button()) {
+            driveTrain.arcadeDrive(driveTrain.applyCurve(rotate), driveTrain.applyCurve(drive));
+            // this is boost mode
+            driveTrain.setBoosted(true);
+            driveTrain.setCreeping(false);
+            driveTrain.setNormal(false);
+        } else if (ps4Controller.getHID().getR1Button()) {
+            driveTrain.arcadeDrive(driveTrain.applyCurve(rotate) * 1 / 4, driveTrain.applyCurve(drive) * 1 / 4);
+            // this is creep mode
+            driveTrain.setBoosted(false);
+            driveTrain.setCreeping(true);
+            driveTrain.setNormal(false);
+        } else {
+            driveTrain.arcadeDrive(driveTrain.applyCurve(rotate) * 1 / 2, driveTrain.applyCurve(drive) * 1 / 2);
+            // this is regular drive
+            driveTrain.setBoosted(false);
+            driveTrain.setCreeping(false);
+            driveTrain.setNormal(true);
+        }
+
     }
 
     @Override

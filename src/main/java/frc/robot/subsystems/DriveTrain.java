@@ -7,20 +7,27 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import lib.DashboardConfiguration;
 
-public  class DriveTrain extends SubsystemBase implements DashboardConfiguration {
-  private final CANSparkMax leftFrontMotor = new CANSparkMax(Constants.MotorConstants.LeftFrontMotor, MotorType.kBrushless);
-  private final CANSparkMax leftBackMotor = new CANSparkMax(Constants.MotorConstants.LeftBackMotor, MotorType.kBrushless);
-  private final CANSparkMax rightFrontMotor = new CANSparkMax(Constants.MotorConstants.RightFrontMotor, MotorType.kBrushless);
-  private final CANSparkMax rightBackMotor = new CANSparkMax(Constants.MotorConstants.RightBackMotor, MotorType.kBrushless);
-  
-  
+public class DriveTrain extends SubsystemBase implements DashboardConfiguration {
+  private final CANSparkMax leftFrontMotor = new CANSparkMax(Constants.MotorConstants.LeftFrontMotor,
+      MotorType.kBrushless);
+  private final CANSparkMax leftBackMotor = new CANSparkMax(Constants.MotorConstants.LeftBackMotor,
+      MotorType.kBrushless);
+  private final CANSparkMax rightFrontMotor = new CANSparkMax(Constants.MotorConstants.RightFrontMotor,
+      MotorType.kBrushless);
+  private final CANSparkMax rightBackMotor = new CANSparkMax(Constants.MotorConstants.RightBackMotor,
+      MotorType.kBrushless);
+
+  private boolean isBoosted = false;
+  private boolean isCreeping = false;
+  private boolean isNormal = true;
+
   public DriveTrain() {
     // set back motors to follow the front ones.
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
   }
 
-  public void arcadeDrive(double rotate,double drive) {
+  public void arcadeDrive(double rotate, double drive) {
     double maximum = Math.max(Math.abs(rotate), Math.abs(drive));
     double total = drive + rotate;
     double difference = drive - rotate;
@@ -29,12 +36,12 @@ public  class DriveTrain extends SubsystemBase implements DashboardConfiguration
       if (rotate >= 0) {
         leftFrontMotor.set(maximum);
         rightFrontMotor.set(difference);
-      
+
       } else {
         leftFrontMotor.set(total);
         rightFrontMotor.set(maximum);
-      } 
-    } else { 
+      }
+    } else {
       if (rotate >= 0) {
         leftFrontMotor.set(total);
         rightFrontMotor.set(-maximum);
@@ -46,9 +53,9 @@ public  class DriveTrain extends SubsystemBase implements DashboardConfiguration
 
   }
 
-  public double applyCurve(double position) { 
+  public double applyCurve(double position) {
     // first part of equation is the same so extract to variable
-    double part1 = (1 - Constants.DriveTrainConstants.TORQUE_RESITANCE_THRESHOLD) * Math.pow(position, 3); 
+    double part1 = (1 - Constants.DriveTrainConstants.TORQUE_RESITANCE_THRESHOLD) * Math.pow(position, 3);
 
     // apply piecewise logic
     if (position > 0) {
@@ -77,7 +84,31 @@ public  class DriveTrain extends SubsystemBase implements DashboardConfiguration
   public CANSparkMax getLeftLeader() {
     return this.leftFrontMotor;
   }
-  
+
+  public Boolean isBoosted() {
+    return this.isBoosted;
+  }
+
+  public Boolean isCreeping() {
+    return this.isCreeping;
+  }
+
+  public boolean isNormal() {
+    return this.isNormal;
+  }
+
+  public void setCreeping(boolean isCreeping) {
+    this.isCreeping = isCreeping;
+  }
+
+  public void setBoosted(boolean isBoosted) {
+    this.isBoosted = isBoosted;
+  }
+
+  public void setNormal(boolean isNormal) {
+    this.isNormal = isNormal;
+  }
+
   @Override
   public void periodic() {
   }
@@ -88,6 +119,6 @@ public  class DriveTrain extends SubsystemBase implements DashboardConfiguration
 
   @Override
   public void configureDashboard() {
-    
+
   }
 }
