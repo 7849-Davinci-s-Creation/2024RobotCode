@@ -18,15 +18,15 @@ public final class Constants {
   
   }
   public static class MotorConstants {
-    public static final int LeftFrontMotor = 0;
-    public static final int LeftBackMotor = 0;
-    public static final int RightFrontMotor = 0;
-    public static final int RightBackMotor = 0;
+    public static final int LeftFrontMotor = 1;
+    public static final int LeftBackMotor = 2;
+    public static final int RightFrontMotor = 4;
+    public static final int RightBackMotor = 3;
   }
   public static class DriveTrainConstants {
     // might need to be changed depending on field and robot weight.
     public static final double TORQUE_RESITANCE_THRESHOLD = 0.05;
-    public static final double JOYSTICK_DEADZONE_DRIVE = 0.01;
-    public static final double JOYSTICK_DEADZONE_ROTATE = 0.01;
+    public static final double JOYSTICK_DEADZONE_DRIVE = 0.0055;
+    public static final double JOYSTICK_DEADZONE_ROTATE = 0.0055;
   }
 }
