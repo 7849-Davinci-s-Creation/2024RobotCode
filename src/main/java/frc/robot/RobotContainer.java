@@ -7,6 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
+import frc.robot.commands.Drive;
+import frc.robot.subsystems.DriveTrain;
 import lib.DashboardManager;
 
 /**
@@ -17,13 +20,17 @@ import lib.DashboardManager;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  DriveTrain driveTrain = new DriveTrain();
+  CommandPS4Controller ps4Controller = new CommandPS4Controller(Constants.OperatorConstants.driverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
 
-    // add subsytems to dashboard managers list (ex: Dashboard.addSubsystemDashboard(subsytem); )
+    // add subsytems to dashboard managers list (ex: Dashboard.addSubsystemDashboard(subsytem); )d
+    DashboardManager.addSubsystemDashboard(driveTrain);
+
     
     // Configure Subsystems dashboard configurations
     DashboardManager.configureDashboards();
@@ -35,7 +42,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    driveTrain.setDefaultCommand(new Drive(driveTrain,ps4Controller));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
