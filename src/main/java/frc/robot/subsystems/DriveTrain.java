@@ -32,6 +32,7 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     // set back motors to follow the front ones.
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
+    leftFrontMotor.setInverted(true);
   }
 
   public void arcadeDrive(double rotate, double drive) {

@@ -30,18 +30,23 @@ public class Drive extends Command {
         double rotate = driveTrain.handleDeadzone(
                 ps4Controller.getRightX(), Constants.DriveTrainConstants.JOYSTICK_DEADZONE_ROTATE);
 
-        if (ps4Controller.getHID().getL1Button()) {
+        if (ps4Controller.getHID().getL1Button() && !(ps4Controller.getHID().getCrossButton())) {
             driveTrain.arcadeDrive(driveTrain.applyCurve(rotate), driveTrain.applyCurve(drive));
             // this is boost mode
             driveTrain.setBoosted(true);
             driveTrain.setCreeping(false);
             driveTrain.setNormal(false);
-        } else if (ps4Controller.getHID().getR1Button()) {
+        } else if (ps4Controller.getHID().getR1Button()&& !(ps4Controller.getHID().getCrossButton())) {
             driveTrain.arcadeDrive(driveTrain.applyCurve(rotate) * 1 / 4, driveTrain.applyCurve(drive) * 1 / 4);
             // this is creep mode
             driveTrain.setBoosted(false);
             driveTrain.setCreeping(true);
             driveTrain.setNormal(false);
+        
+        } else if (ps4Controller.getHID().getCrossButton()){
+            driveTrain.arcadeDrive(0, 0);
+       
+       
         } else {
             driveTrain.arcadeDrive(driveTrain.applyCurve(rotate) * 1 / 2, driveTrain.applyCurve(drive) * 1 / 2);
             // this is regular drive
