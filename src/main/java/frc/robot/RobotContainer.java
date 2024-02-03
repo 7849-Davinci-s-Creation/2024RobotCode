@@ -13,37 +13,47 @@ import frc.robot.subsystems.DriveTrain;
 import lib.DashboardManager;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  DriveTrain driveTrain = new DriveTrain();
-  CommandPS4Controller ps4Controller = new CommandPS4Controller(Constants.OperatorConstants.driverControllerPort);
+  // Subsystems
+  private final DriveTrain driveTrain = new DriveTrain();
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  // controllers
+  private final CommandPS4Controller driverController = new CommandPS4Controller(
+      Constants.OperatorConstants.driverControllerPort);
+
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
 
-    // add subsytems to dashboard managers list (ex: Dashboard.addSubsystemDashboard(subsytem); )d
+    // add subsytems to dashboard managers list (ex:
+    // Dashboard.addSubsystemDashboard(subsytem); )d
     DashboardManager.addSubsystemDashboard(driveTrain);
 
-    
     // Configure Subsystems dashboard configurations
     DashboardManager.configureDashboards();
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+   * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    driveTrain.setDefaultCommand(new Drive(driveTrain,ps4Controller));
+    driveTrain.setDefaultCommand(new Drive(driveTrain, driverController));
   }
 
   /**

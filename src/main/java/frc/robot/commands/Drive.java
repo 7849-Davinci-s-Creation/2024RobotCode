@@ -6,8 +6,8 @@ import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
 public class Drive extends Command {
-    DriveTrain driveTrain;
-    CommandPS4Controller ps4Controller;
+    private final DriveTrain driveTrain;
+    private final CommandPS4Controller ps4Controller;
 
     public Drive(DriveTrain driveTrain, CommandPS4Controller ps4Controller) {
         this.driveTrain = driveTrain;
