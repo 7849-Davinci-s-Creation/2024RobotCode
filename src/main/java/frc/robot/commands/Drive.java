@@ -93,6 +93,7 @@ public class Drive extends Command {
         return false;
     }
 
+    // method for handling inversion of driving.
     private void drive(double rotate, double drive) {
         double d = drive;
 
