@@ -7,6 +7,7 @@ public class Climber extends SubsystemBase implements DashboardConfiguration{
     
     @Override
     public void periodic() {
+        this.configureDashboard();
     }
   
     @Override

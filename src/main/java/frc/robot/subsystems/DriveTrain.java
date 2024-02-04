@@ -25,6 +25,7 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
   private boolean isBoosted = false;
   private boolean isCreeping = false;
   private boolean isNormal = true;
+  private boolean isInverted = false;
 
   private boolean navXDebugMode = false;
 
@@ -117,12 +118,35 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     this.isNormal = isNormal;
   }
 
+  public boolean isInverted() {
+    return this.isInverted;
+  }
+
+  public void setInverted(boolean isInverted) {
+    this.isInverted = isInverted;
+  }
+
   public void setNavXDebugMode(boolean debug) {
     this.navXDebugMode = debug;
   }
 
   @Override
   public void periodic() {
+    this.configureDashboard();
+  }
+
+  @Override
+  public void simulationPeriodic() {
+  }
+
+  @Override
+  public void configureDashboard() {
+    // Log current driving mode to smart dashboard
+    SmartDashboard.putBoolean("Inverted", this.isInverted());
+    SmartDashboard.putBoolean("Boosted", this.isBoosted());
+    SmartDashboard.putBoolean("Creep", this.isCreeping());
+    SmartDashboard.putBoolean("Normal", this.isNormal());
+
     if (navXDebugMode) {
       SmartDashboard.putBoolean("IMU_Connected", navx.isConnected());
       SmartDashboard.putBoolean("IMU_IsCalibrating", navx.isCalibrating());
@@ -201,15 +225,5 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
       SmartDashboard.putNumber("IMU_Byte_Count", navx.getByteCount());
       SmartDashboard.putNumber("IMU_Update_Count", navx.getUpdateCount());
     }
-
-  }
-
-  @Override
-  public void simulationPeriodic() {
-  }
-
-  @Override
-  public void configureDashboard() {
-
   }
 }
