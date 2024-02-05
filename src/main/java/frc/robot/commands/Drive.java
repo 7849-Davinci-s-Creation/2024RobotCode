@@ -21,10 +21,7 @@ public class Drive extends Command {
     public void initialize() {
         driveTrain.arcadeDrive(0, 0);
 
-        driveTrain.setBoosted(false);
-        driveTrain.setCreeping(false);
-        driveTrain.setNormal(true);
-        driveTrain.setInverted(false);
+        driveTrain.setNormalDriving();
     }
 
     @Override
@@ -47,20 +44,14 @@ public class Drive extends Command {
         if (ps4Controller.getHID().getL1Button() && !(ps4Controller.getHID().getCrossButton())) {
             this.drive(driveTrain.applyCurve(rotate), driveTrain.applyCurve(drive));
 
-            // this is boost mode
-            driveTrain.setBoosted(true);
-            driveTrain.setCreeping(false);
-            driveTrain.setNormal(false);
+            driveTrain.setBoostedDriving();
 
             // if creep button is pressed and we arent braking.
         } else if (ps4Controller.getHID().getR1Button() && !(ps4Controller.getHID().getCrossButton())) {
             this.drive(driveTrain.applyCurve(rotate) * Constants.DriveTrainConstants.CREEP_ROTATE_NERF,
                     driveTrain.applyCurve(drive) * Constants.DriveTrainConstants.CREEP_DRIVE_NERF);
 
-            // this is creep mode
-            driveTrain.setBoosted(false);
-            driveTrain.setCreeping(true);
-            driveTrain.setNormal(false);
+            driveTrain.setCreepedDriving();
 
             // if brake button is pressed.
         } else if (ps4Controller.getHID().getCrossButton()) {
@@ -71,10 +62,7 @@ public class Drive extends Command {
             this.drive(driveTrain.applyCurve(rotate) * Constants.DriveTrainConstants.NORMAL_ROTATE_NERF,
                     driveTrain.applyCurve(drive) * Constants.DriveTrainConstants.NORMAL_DRIVE_NERF);
 
-            // this is regular drive
-            driveTrain.setBoosted(false);
-            driveTrain.setCreeping(false);
-            driveTrain.setNormal(true);
+            driveTrain.setNormalDriving();
         }
     }
 
@@ -82,10 +70,7 @@ public class Drive extends Command {
     public void end(boolean interuppted) {
         driveTrain.arcadeDrive(0, 0);
 
-        driveTrain.setBoosted(false);
-        driveTrain.setCreeping(false);
-        driveTrain.setNormal(true);
-        driveTrain.setInverted(false);
+        driveTrain.setNormalDriving();
     }
 
     @Override

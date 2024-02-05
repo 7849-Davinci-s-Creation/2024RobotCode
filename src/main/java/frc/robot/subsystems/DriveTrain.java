@@ -130,6 +130,24 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     this.navXDebugMode = debug;
   }
 
+  public void setNormalDriving() {
+    this.setBoosted(false);
+    this.setCreeping(false);
+    this.setNormal(true);
+  }
+
+  public void setBoostedDriving() {
+    this.setBoosted(true);
+    this.setCreeping(false);
+    this.setNormal(false);
+  }
+
+  public void setCreepedDriving() {
+    this.setBoosted(false);
+    this.setCreeping(true);
+    this.setNormal(false);
+  }
+
   @Override
   public void periodic() {
     this.configureDashboard();
