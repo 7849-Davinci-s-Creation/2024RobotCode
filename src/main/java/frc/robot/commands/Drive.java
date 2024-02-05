@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import frc.robot.Constants;
@@ -33,7 +32,8 @@ public class Drive extends Command {
         double rotate = driveTrain.handleDeadzone(
                 ps4Controller.getRightX(), Constants.DriveTrainConstants.JOYSTICK_DEADZONE_ROTATE);
 
-        // if we press either of the triggers then we are wanting to invert robots driving
+        // if we press either of the triggers then we are wanting to invert robots
+        // driving
         if (ps4Controller.getHID().getL2Button() || ps4Controller.getHID().getR2Button()) {
             driveTrain.setInverted(true);
         } else {
