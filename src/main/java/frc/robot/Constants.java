@@ -34,10 +34,10 @@ public final class Constants {
     public static final double JOYSTICK_DEADZONE_DRIVE = 0.0055;
     public static final double JOYSTICK_DEADZONE_ROTATE = 0.0055;
 
-    public static final double NORMAL_DRIVE_NERF = 1 / 2;
-    public static final double NORMAL_ROTATE_NERF = 1 / 2;
+    public static final double NORMAL_DRIVE_NERF = 0.5;
+    public static final double NORMAL_ROTATE_NERF = 0.5;
 
-    public static final double CREEP_DRIVE_NERF = 1 / 4;
-    public static final double CREEP_ROTATE_NERF = 1 / 4;
+    public static final double CREEP_DRIVE_NERF = 0.25;
+    public static final double CREEP_ROTATE_NERF = 0.25;
   }
 }
