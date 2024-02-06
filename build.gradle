@@ -55,7 +55,7 @@ def includeDesktopSupport = true
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 5.
 dependencies {
-    implementation 'com.github.7849-Davinci-s-Creation:7849Lib:1.0.4'
+    implementation 'com.github.7849-Davinci-s-Creation:7849Lib:1.0.5'
 
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
