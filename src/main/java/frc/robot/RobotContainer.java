@@ -8,8 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Drive;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
 import lib.DashboardManager;
 
 /**
@@ -24,10 +27,14 @@ import lib.DashboardManager;
 public class RobotContainer {
   // Subsystems
   private final DriveTrain driveTrain = new DriveTrain();
+  private final Intake intake = new Intake();
 
   // controllers
   private final CommandPS4Controller driverController = new CommandPS4Controller(
       Constants.OperatorConstants.driverControllerPort);
+  private final CommandXboxController operatorController = new CommandXboxController(
+    Constants.OperatorConstants.operatorControllerPort);
+  
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -39,6 +46,7 @@ public class RobotContainer {
     // add subsytems to dashboard managers list (ex:
     // Dashboard.addSubsystemDashboard(subsytem); )d
     DashboardManager.addSubsystemDashboard(driveTrain);
+    DashboardManager.addSubsystemDashboard(intake);
 
     // Configure Subsystems dashboard configurations
     DashboardManager.configureDashboards();
@@ -54,6 +62,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     driveTrain.setDefaultCommand(new Drive(driveTrain, driverController));
+    intake.setDefaultCommand(new IntakeCommand(operatorController,intake));
   }
 
   /**
