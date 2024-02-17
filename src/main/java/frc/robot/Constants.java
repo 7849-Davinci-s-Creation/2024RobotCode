@@ -32,6 +32,8 @@ public final class Constants {
     public static final int RIGHT_FRONT_MOTOR = 4;
     public static final int RIGHT_BACK_MOTOR = 3;
     public static final int INTAKE_MOTOR = 0;
+    public static final int FLY_WHEEL = 0;
+    public static final int INTAKE_WHEEL = 0;
   }
 
   public static class DriveTrainConstants {

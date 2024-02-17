@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 import lib.DashboardManager;
 
 /**
@@ -28,6 +30,7 @@ public class RobotContainer {
   // Subsystems
   private final DriveTrain driveTrain = new DriveTrain();
   private final Intake intake = new Intake();
+  private final Shooter shoot = new Shooter();
 
   // controllers
   private final CommandPS4Controller driverController = new CommandPS4Controller(
@@ -62,6 +65,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     driveTrain.setDefaultCommand(new Drive(driveTrain, driverController));
     intake.setDefaultCommand(new IntakeCommand(operatorController, intake));
+    shoot.setDefaultCommand(new ShootCommand(operatorController, shoot));
   }
 
   /**
