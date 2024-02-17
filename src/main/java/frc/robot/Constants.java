@@ -18,8 +18,8 @@ package frc.robot;
  */
 public final class Constants {
   public static class OperatorConstants {
-    public static final int driverControllerPort = 0;
-    public static final int operatorControllerPort = 1;
+    public static final int DRIVER_CONTROLLER_PORT = 0;
+    public static final int OPERATOR_CONTROLLER_PORT = 1;
   }
 
   public static class IntakeConstants {
@@ -27,11 +27,11 @@ public final class Constants {
   }
 
   public static class MotorConstants {
-    public static final int LeftFrontMotor = 1;
-    public static final int LeftBackMotor = 2;
-    public static final int RightFrontMotor = 4;
-    public static final int RightBackMotor = 3;
-    public static final int IntakeMotor = 0;
+    public static final int LEFT_FRONT_MOTOR = 1;
+    public static final int LEFT_BACK_MOTOR = 2;
+    public static final int RIGHT_FRONT_MOTOR = 4;
+    public static final int RIGHT_BACK_MOTOR = 3;
+    public static final int INTAKE_MOTOR = 0;
   }
 
   public static class DriveTrainConstants {

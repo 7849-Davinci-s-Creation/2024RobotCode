@@ -20,7 +20,7 @@ public class IntakeCommand extends Command {
     }
 
     @Override
-    public void execute() { 
+    public void execute() {
         if (xboxController.getHID().getBButton() && !intake.hasNote()) {
             intake.intake();
         } else if (xboxController.getHID().getYButton() && intake.hasNote()) {

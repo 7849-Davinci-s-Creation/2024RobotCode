@@ -11,13 +11,13 @@ import frc.robot.Constants;
 import lib.DashboardConfiguration;
 
 public class DriveTrain extends SubsystemBase implements DashboardConfiguration {
-  private final CANSparkMax leftFrontMotor = new CANSparkMax(Constants.MotorConstants.LeftFrontMotor,
+  private final CANSparkMax leftFrontMotor = new CANSparkMax(Constants.MotorConstants.LEFT_FRONT_MOTOR,
       MotorType.kBrushless);
-  private final CANSparkMax leftBackMotor = new CANSparkMax(Constants.MotorConstants.LeftBackMotor,
+  private final CANSparkMax leftBackMotor = new CANSparkMax(Constants.MotorConstants.LEFT_BACK_MOTOR,
       MotorType.kBrushless);
-  private final CANSparkMax rightFrontMotor = new CANSparkMax(Constants.MotorConstants.RightFrontMotor,
+  private final CANSparkMax rightFrontMotor = new CANSparkMax(Constants.MotorConstants.RIGHT_FRONT_MOTOR,
       MotorType.kBrushless);
-  private final CANSparkMax rightBackMotor = new CANSparkMax(Constants.MotorConstants.RightBackMotor,
+  private final CANSparkMax rightBackMotor = new CANSparkMax(Constants.MotorConstants.RIGHT_BACK_MOTOR,
       MotorType.kBrushless);
 
   private final AHRS navx = new AHRS(SPI.Port.kMXP);

@@ -31,10 +31,9 @@ public class RobotContainer {
 
   // controllers
   private final CommandPS4Controller driverController = new CommandPS4Controller(
-      Constants.OperatorConstants.driverControllerPort);
+      Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
   private final CommandXboxController operatorController = new CommandXboxController(
-    Constants.OperatorConstants.operatorControllerPort);
-  
+      Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -62,7 +61,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     driveTrain.setDefaultCommand(new Drive(driveTrain, driverController));
-    intake.setDefaultCommand(new IntakeCommand(operatorController,intake));
+    intake.setDefaultCommand(new IntakeCommand(operatorController, intake));
   }
 
   /**
