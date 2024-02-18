@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -13,7 +12,6 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
     private final TalonSRX intakeMotor = new TalonSRX(Constants.MotorConstants.INTAKE_MOTOR);
     
     public Shooter() {
-        SmartDashboard.putNumber("shooter voltage", 0);
     }
 
     public void shoot() {
@@ -36,5 +34,6 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
 
     @Override
     public void configureDashboard() {
+        SmartDashboard.putNumber("shooter voltage", 0);
     }
 }

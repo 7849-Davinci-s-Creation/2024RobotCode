@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -34,6 +35,12 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
     leftFrontMotor.setInverted(true);
+
+    // put into break mode for safety and ease of use!
+    leftFrontMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
+    leftBackMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
+    rightFrontMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
+    rightBackMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
   }
 
   public void arcadeDrive(double rotate, double drive) {
@@ -64,13 +71,13 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
 
   public double applyCurve(double position) {
     // first part of equation is the same so extract to variable
-    double part1 = (1 - Constants.DriveTrainConstants.TORQUE_RESITANCE_THRESHOLD) * Math.pow(position, 3);
+    double part1 = (1 - Constants.DriveTrainConstants.TORQUE_RESISTANCE_THRESHOLD) * Math.pow(position, 3);
 
     // apply piecewise logic
     if (position > 0) {
-      return part1 + Constants.DriveTrainConstants.TORQUE_RESITANCE_THRESHOLD;
+      return part1 + Constants.DriveTrainConstants.TORQUE_RESISTANCE_THRESHOLD;
     } else if (position < 0) {
-      return part1 - Constants.DriveTrainConstants.TORQUE_RESITANCE_THRESHOLD;
+      return part1 - Constants.DriveTrainConstants.TORQUE_RESISTANCE_THRESHOLD;
     }
 
     // else joystick position is 0 so return 0

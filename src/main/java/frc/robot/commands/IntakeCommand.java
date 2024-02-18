@@ -1,14 +1,14 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Intake;
 
 public class IntakeCommand extends Command {
-    private final CommandXboxController xboxController;
+    private final XboxController xboxController;
     private final Intake intake;
 
-    public IntakeCommand(CommandXboxController xboxController, Intake intake) {
+    public IntakeCommand(XboxController xboxController, Intake intake) {
         this.xboxController = xboxController;
         this.intake = intake;
         addRequirements(intake);
@@ -21,9 +21,9 @@ public class IntakeCommand extends Command {
 
     @Override
     public void execute() {
-        if (xboxController.getHID().getBButton() && !intake.hasNote()) {
+        if (xboxController.getBButton() && !intake.hasNote()) {
             intake.intake();
-        } else if (xboxController.getHID().getYButton() && intake.hasNote()) {
+        } else if (xboxController.getYButton() && intake.hasNote()) {
             intake.outake();
         }
 
