@@ -23,10 +23,7 @@ public class IntakeCommand extends Command {
     public void execute() {
         if (xboxController.getBButton() && !intake.hasNote()) {
             intake.intake();
-        } else if (xboxController.getYButton() && intake.hasNote()) {
-            intake.outake();
-        }
-
+        } 
     }
 
     @Override

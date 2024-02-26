@@ -28,10 +28,6 @@ public class Intake extends SubsystemBase implements DashboardConfiguration {
         intakeMotor.set(TalonSRXControlMode.Current, 10);
     }
 
-    public void outake() {
-        intakeMotor.set(TalonSRXControlMode.Current, -10);
-    }
-
     @Override
     public void periodic() {
         this.configureDashboard();
