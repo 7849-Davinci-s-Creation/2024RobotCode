@@ -22,7 +22,7 @@ public class ShootCommand extends Command {
     @Override
     public void execute() {
         if (xboxController.getHID().getAButton()) {
-            shoot.shoot();
+            shoot.shoot(10);
         }
 
     }

@@ -20,9 +20,9 @@ public final class Constants {
     public static final int RIGHT_FRONT_MOTOR = 4;
     public static final int RIGHT_BACK_MOTOR = 3;
     //TODO: change these when they are wired into CAN
-    public static final int INTAKE_MOTOR = 0;
-    public static final int FLY_WHEEL = 0;
-    public static final int INTAKE_WHEEL = 0;
+    public static final int INTAKE_MOTOR = 6;
+    public static final int FLY_WHEEL_BOTTOM = 7;
+    public static final int FLY_WHEEL_TOP = 8;
   }
 
   public static class DriveTrainConstants {
