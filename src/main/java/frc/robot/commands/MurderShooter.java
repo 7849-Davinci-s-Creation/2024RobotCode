@@ -4,12 +4,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Shooter;
 
-public class ShootCommand extends Command {
-    private final CommandXboxController xboxController;
+public class MurderShooter extends Command {
     private final Shooter shoot;
 
-    public ShootCommand(CommandXboxController xboxController, Shooter shoot) {
-        this.xboxController = xboxController;
+    public MurderShooter(CommandXboxController xboxController, Shooter shoot) {
         this.shoot = shoot;
         addRequirements(shoot);
     }
@@ -21,7 +19,7 @@ public class ShootCommand extends Command {
 
     @Override
     public void execute() {
-        shoot.shoot(1);
+        shoot.shoot(0);
     }
 
     @Override

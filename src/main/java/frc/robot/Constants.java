@@ -22,7 +22,7 @@ public final class Constants {
     //TODO: change these when they are wired into CAN
     public static final int INTAKE_MOTOR = 6;
     public static final int FLY_WHEEL_BOTTOM = 7;
-    public static final int FLY_WHEEL_TOP = 8;
+    public static final int FLY_WHEEL_TOP = 5;
   }
 
   public static class DriveTrainConstants {

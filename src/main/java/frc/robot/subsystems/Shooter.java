@@ -14,10 +14,12 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
     
     public Shooter() {
         bottomFlyWheel.follow(topFlyWheel);
+        topFlyWheel.setInverted(true);
+        bottomFlyWheel.setInverted(true);
     }
 
     public void shoot(double current) {
-        topFlyWheel.set(ControlMode.Current, current);
+        topFlyWheel.set(ControlMode.PercentOutput, current);
     }
 
     @Override

@@ -14,6 +14,7 @@ public class Intake extends SubsystemBase implements DashboardConfiguration {
     private final DigitalInput limitSwitch = new DigitalInput(Constants.IntakeConstants.INTAKE_SWITCH);
 
     public Intake() {
+        intakeMotor.setInverted(true);
     }
 
     public boolean hasNote() {
@@ -24,8 +25,8 @@ public class Intake extends SubsystemBase implements DashboardConfiguration {
         return this.limitSwitch;
     }
 
-    public void intake() {
-        intakeMotor.set(TalonSRXControlMode.Current, 10);
+    public void intake(double current) {
+        intakeMotor.set(TalonSRXControlMode.PercentOutput, current);
     }
 
     @Override

@@ -43,7 +43,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
     driveTrain.setDefaultCommand(new Drive(driverController.getHID(), driveTrain));
     intake.setDefaultCommand(new IntakeCommand(operatorController.getHID(), intake));
-    shooter.setDefaultCommand(new ShootCommand(operatorController, shooter));
   }
 
   public Command getAutonomousCommand() {
