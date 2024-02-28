@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.BuiltCommands;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.MurderShooter;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -43,7 +44,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     driveTrain.setDefaultCommand(new Drive(driverController.getHID(), driveTrain));
-    operatorController.a().whileTrue(BuiltCommands.shootSequence(shooter, intake));
+    operatorController.a().whileTrue(BuiltCommands.shootSequence(shooter, intake)).onFalse(new MurderShooter(shooter));
     intake.setDefaultCommand(new IntakeCommand(operatorController.getHID(), intake));
   }
 
