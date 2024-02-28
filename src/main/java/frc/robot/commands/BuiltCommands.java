@@ -13,9 +13,10 @@ public class BuiltCommands {
         return new SequentialCommandGroup(
                 new RevUpShooterSeconds(shoot, 1, 1),
                 new ParallelCommandGroup(
-                        new RunIntakeSeconds(intake, 2, -1),
+                        new RunIntakeSeconds(intake, 2, 1),
                         new ShootCommand(shoot))
 
         );
     }
+    
 }

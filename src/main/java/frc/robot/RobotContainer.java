@@ -12,6 +12,7 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.MurderShooter;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.timedcommands.RunIntakeSeconds;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -45,7 +46,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     driveTrain.setDefaultCommand(new Drive(driverController.getHID(), driveTrain));
     operatorController.a().whileTrue(BuiltCommands.shootSequence(shooter, intake)).onFalse(new MurderShooter(shooter));
-    intake.setDefaultCommand(new IntakeCommand(operatorController.getHID(), intake));
+    operatorController.b().whileTrue(new IntakeCommand(intake)).onFalse(new RunIntakeSeconds(intake, 0.5, -1));
   }
 
   public Command getAutonomousCommand() {
