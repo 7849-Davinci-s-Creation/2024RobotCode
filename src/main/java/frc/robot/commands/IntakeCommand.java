@@ -19,7 +19,6 @@ public class IntakeCommand extends Command {
     @Override
     public void execute() {
         intake.intake(1);
-        
     }
 
     @Override

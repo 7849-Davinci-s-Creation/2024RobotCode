@@ -38,13 +38,13 @@ public class Drive extends Command {
 
         // if boost button is pressed and we arent braking.
         if (ps4Controller.getL1Button() && !(ps4Controller.getCrossButton())) {
-            this.drive(driveTrain.applyCurve(rotate), driveTrain.applyCurve(drive));
+            drive(driveTrain.applyCurve(rotate), driveTrain.applyCurve(drive));
 
             driveTrain.setBoostedDriving();
 
             // if creep button is pressed and we arent braking.
         } else if (ps4Controller.getR1Button() && !(ps4Controller.getCrossButton())) {
-            this.drive(driveTrain.applyCurve(rotate) * Constants.DriveTrainConstants.CREEP_ROTATE_NERF,
+            drive(driveTrain.applyCurve(rotate) * Constants.DriveTrainConstants.CREEP_ROTATE_NERF,
                     driveTrain.applyCurve(drive) * Constants.DriveTrainConstants.CREEP_DRIVE_NERF);
 
             driveTrain.setCreepedDriving();
@@ -55,7 +55,7 @@ public class Drive extends Command {
 
             // else just drive normal
         } else {
-            this.drive(driveTrain.applyCurve(rotate) * Constants.DriveTrainConstants.NORMAL_ROTATE_NERF,
+            drive(driveTrain.applyCurve(rotate) * Constants.DriveTrainConstants.NORMAL_ROTATE_NERF,
                     driveTrain.applyCurve(drive) * Constants.DriveTrainConstants.NORMAL_DRIVE_NERF);
 
             driveTrain.setNormalDriving();

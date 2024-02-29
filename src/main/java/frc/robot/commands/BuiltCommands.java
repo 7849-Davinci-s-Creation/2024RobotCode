@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.shooter.ShootCommand;
 import frc.robot.commands.timedcommands.RevUpShooterSeconds;
 import frc.robot.commands.timedcommands.RunIntakeSeconds;
 import frc.robot.subsystems.Intake;
@@ -15,7 +16,6 @@ public class BuiltCommands {
                 new ParallelCommandGroup(
                         new RunIntakeSeconds(intake, 2, 1),
                         new ShootCommand(shoot))
-
         );
     }
     
