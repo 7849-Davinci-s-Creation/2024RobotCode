@@ -1,16 +1,16 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
 public class Drive extends Command {
     private final DriveTrain driveTrain;
 
-    private final CommandPS4Controller ps4Controller;
+    private final PS4Controller ps4Controller;
 
-    public Drive(DriveTrain driveTrain, CommandPS4Controller ps4Controller) {
+    public Drive(PS4Controller ps4Controller, DriveTrain driveTrain) {
         this.driveTrain = driveTrain;
         this.ps4Controller = ps4Controller;
 
@@ -34,32 +34,28 @@ public class Drive extends Command {
 
         // if we press either of the triggers then we are wanting to invert robots
         // driving
-        if (ps4Controller.getHID().getL2Button() || ps4Controller.getHID().getR2Button()) {
-            driveTrain.setInverted(true);
-        } else {
-            driveTrain.setInverted(false);
-        }
+        driveTrain.setInverted(ps4Controller.getL2Button() || ps4Controller.getR2Button());
 
         // if boost button is pressed and we arent braking.
-        if (ps4Controller.getHID().getL1Button() && !(ps4Controller.getHID().getCrossButton())) {
-            this.drive(driveTrain.applyCurve(rotate), driveTrain.applyCurve(drive));
+        if (ps4Controller.getL1Button() && !(ps4Controller.getCrossButton())) {
+            drive(driveTrain.applyCurve(rotate), driveTrain.applyCurve(drive));
 
             driveTrain.setBoostedDriving();
 
             // if creep button is pressed and we arent braking.
-        } else if (ps4Controller.getHID().getR1Button() && !(ps4Controller.getHID().getCrossButton())) {
-            this.drive(driveTrain.applyCurve(rotate) * Constants.DriveTrainConstants.CREEP_ROTATE_NERF,
+        } else if (ps4Controller.getR1Button() && !(ps4Controller.getCrossButton())) {
+            drive(driveTrain.applyCurve(rotate) * Constants.DriveTrainConstants.CREEP_ROTATE_NERF,
                     driveTrain.applyCurve(drive) * Constants.DriveTrainConstants.CREEP_DRIVE_NERF);
 
             driveTrain.setCreepedDriving();
 
             // if brake button is pressed.
-        } else if (ps4Controller.getHID().getCrossButton()) {
+        } else if (ps4Controller.getCrossButton()) {
             driveTrain.arcadeDrive(0, 0);
 
             // else just drive normal
         } else {
-            this.drive(driveTrain.applyCurve(rotate) * Constants.DriveTrainConstants.NORMAL_ROTATE_NERF,
+            drive(driveTrain.applyCurve(rotate) * Constants.DriveTrainConstants.NORMAL_ROTATE_NERF,
                     driveTrain.applyCurve(drive) * Constants.DriveTrainConstants.NORMAL_DRIVE_NERF);
 
             driveTrain.setNormalDriving();
@@ -68,8 +64,6 @@ public class Drive extends Command {
 
     @Override
     public void end(boolean interuppted) {
-        // driveTrain.arcadeDrive(0, 0);
-
         driveTrain.setNormalDriving();
     }
 
