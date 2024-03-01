@@ -12,6 +12,8 @@ public final class Constants {
 
   public static class IntakeConstants {
     public static final int INTAKE_SWITCH = 0;
+    public static final double OUT_SECONDS = 2;
+    public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 1;
   }
 
   public static class MotorConstants {
@@ -36,5 +38,11 @@ public final class Constants {
 
     public static final double CREEP_DRIVE_NERF = 0.25;
     public static final double CREEP_ROTATE_NERF = 0.25;
+  }
+
+  public static class ShooterConstants {
+    public static final double REV_TIME = 1.5;
+    public static final double SPEAKER_PERCENT_OUTPUT = 1;
+    public static final double AMP_PERCENT_OUTPUT = 0.70;
   }
 }

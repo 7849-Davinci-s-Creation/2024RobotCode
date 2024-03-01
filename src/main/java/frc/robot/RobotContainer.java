@@ -11,7 +11,6 @@ import frc.robot.commands.BuiltCommands;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.MurderShooter;
-import frc.robot.commands.ShootCommand;
 import frc.robot.commands.timedcommands.RunIntakeSeconds;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -45,7 +44,8 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     driveTrain.setDefaultCommand(new Drive(driverController.getHID(), driveTrain));
-    operatorController.a().whileTrue(BuiltCommands.shootSequence(shooter, intake)).onFalse(new MurderShooter(shooter));
+    operatorController.a().whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.SPEAKER_PERCENT_OUTPUT)).onFalse(new MurderShooter(shooter));
+    operatorController.x().whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.AMP_PERCENT_OUTPUT)).onFalse(new MurderShooter(shooter));
     operatorController.b().whileTrue(new IntakeCommand(intake)).onFalse(new RunIntakeSeconds(intake, 0.5, -1));
   }
 
