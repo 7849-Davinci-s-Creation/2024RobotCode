@@ -1,15 +1,29 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkBase;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.units.*;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import lib.DashboardConfiguration;
+
+import static edu.wpi.first.units.Units.*;
 
 public class DriveTrain extends SubsystemBase implements DashboardConfiguration {
   private final CANSparkMax leftFrontMotor = new CANSparkMax(Constants.MotorConstants.LEFT_FRONT_MOTOR,
@@ -21,7 +35,30 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
   private final CANSparkMax rightBackMotor = new CANSparkMax(Constants.MotorConstants.RIGHT_BACK_MOTOR,
       MotorType.kBrushless);
 
+  private final RelativeEncoder leftEncoder = leftFrontMotor.getEncoder();
+  private final RelativeEncoder rightEncoder = rightFrontMotor.getEncoder();
+
   private final AHRS navx = new AHRS(SPI.Port.kMXP);
+
+  private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.TRACK_WIDTH_METERS);
+
+  private final MutableMeasure<Voltage> appliedVoltage = MutableMeasure.mutable(Volts.of(0));
+  private final MutableMeasure<Distance> distance = MutableMeasure.mutable(Meters.of(0));
+  private final MutableMeasure<Velocity<Distance>> velocity = MutableMeasure.mutable(MetersPerSecond.of(0));
+
+  private final SysIdRoutine.Config config = new SysIdRoutine.Config(Volts.of(3).per(Seconds.of(1)),
+          Volts.of(3),
+          Seconds.of(3),
+          null);
+
+  private final SysIdRoutine.Mechanism mechanism = new SysIdRoutine.Mechanism(
+          this::voltageDrive,
+          this::log,
+          this);
+
+  private final SysIdRoutine driveTrainRoutine = new SysIdRoutine(config, mechanism);
+
+  private final DifferentialDriveOdometry odometry;
 
   private boolean isBoosted = false;
   private boolean isCreeping = false;
@@ -31,6 +68,9 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
   private boolean navXDebugMode = false;
 
   public DriveTrain() {
+    zeroHeading();
+    resetEncoders();
+
     // set back motors to follow the front ones.
     leftBackMotor.follow(leftFrontMotor);
     rightBackMotor.follow(rightFrontMotor);
@@ -41,6 +81,27 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     leftBackMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
     rightFrontMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
     rightBackMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
+
+    odometry = new DifferentialDriveOdometry(navx.getRotation2d(), getLeftEncoderPosition(), getRightEncoderPosition());
+
+    leftEncoder.setPositionConversionFactor(Constants.DriveTrainConstants.LINEAR_CONVERSION_FACTOR);
+    rightEncoder.setPositionConversionFactor(Constants.DriveTrainConstants.LINEAR_CONVERSION_FACTOR);
+
+    leftEncoder.setVelocityConversionFactor(Constants.DriveTrainConstants.LINEAR_CONVERSION_FACTOR / 60);
+    rightEncoder.setVelocityConversionFactor(Constants.DriveTrainConstants.LINEAR_CONVERSION_FACTOR / 60);
+
+    AutoBuilder.configureRamsete(
+            this::getPose2d,
+            this::resetOdometry,
+            this::getWheelSpeeds,
+            this::pathDrive,
+            new ReplanningConfig(),
+            () -> {
+              var alliance = DriverStation.getAlliance();
+              return alliance.filter(value -> value == DriverStation.Alliance.Blue).isPresent();
+            },
+            this
+    );
   }
 
   public void arcadeDrive(double rotate, double drive) {
@@ -69,6 +130,22 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
 
   }
 
+  public void voltageDrive(Measure<Voltage> volts) {
+    leftFrontMotor.setVoltage(volts.in(Volts));
+    rightFrontMotor.setVoltage(volts.in(Volts));
+  }
+
+  public void pathDrive(ChassisSpeeds speeds) {
+    DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(speeds);
+    SimpleMotorFeedforward feeder = new SimpleMotorFeedforward(Constants.SysIDValues.KS, Constants.SysIDValues.KV);
+
+    double leftRadPerSeconds = wheelSpeeds.leftMetersPerSecond / edu.wpi.first.math.util.Units.inchesToMeters(Constants.DriveTrainConstants.WHEEL_RADIUS_INCHES);
+    double rightRadPerSeconds = wheelSpeeds.rightMetersPerSecond / edu.wpi.first.math.util.Units.inchesToMeters(Constants.DriveTrainConstants.WHEEL_RADIUS_INCHES);
+
+    leftFrontMotor.setVoltage(feeder.calculate(leftRadPerSeconds));
+    rightFrontMotor.setVoltage(feeder.calculate(rightRadPerSeconds));
+  }
+
   public double applyCurve(double position) {
     // first part of equation is the same so extract to variable
     double part1 = (1 - Constants.DriveTrainConstants.TORQUE_RESISTANCE_THRESHOLD) * Math.pow(position, 3);
@@ -91,6 +168,66 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     }
 
     return value;
+  }
+
+  public void log(SysIdRoutineLog log) {
+    int numberOfEntries = 2;
+
+    double averageVoltage = ((leftFrontMotor.getAppliedOutput() * leftFrontMotor.getBusVoltage()) +
+            (rightFrontMotor.getAppliedOutput() * rightFrontMotor.getBusVoltage())) / numberOfEntries;
+    double averageLinearPosition = (getLeftEncoderPosition() + getRightEncoderPosition()) / numberOfEntries;
+    double averageLinearVelocity = (leftEncoder.getVelocity() + rightEncoder.getVelocity()) / numberOfEntries;
+
+    // drivetrain
+    log.motor("drivetrain")
+            .voltage(appliedVoltage.mut_replace(averageVoltage, Volts))
+            .linearPosition(distance.mut_replace(averageLinearPosition, Meters))
+            .linearVelocity(velocity.mut_replace(averageLinearVelocity, MetersPerSecond));
+  }
+
+  public void resetEncoders() {
+    rightEncoder.setPosition(0);
+    leftEncoder.setPosition(0);
+  }
+
+  public double getLeftEncoderPosition() {
+    return leftEncoder.getPosition();
+  }
+
+  public double getRightEncoderPosition() {
+    return rightEncoder.getPosition();
+  }
+
+  public double getHeading() {
+    return navx.getRotation2d().getDegrees();
+  }
+
+  public double getTurnRate() {
+    return -navx.getRate();
+  }
+
+  public Pose2d getPose2d() {
+    return odometry.getPoseMeters();
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    odometry.resetPosition(navx.getRotation2d(), getLeftEncoderPosition(), getRightEncoderPosition(),
+            pose);
+  }
+
+  public ChassisSpeeds getWheelSpeeds() {
+    return kinematics.toChassisSpeeds(
+            new DifferentialDriveWheelSpeeds(
+                    leftEncoder.getVelocity(), rightEncoder.getVelocity()));
+  }
+
+  public double getAverageEncoderDistance() {
+    return (getLeftEncoderPosition() + getRightEncoderPosition()) / 2;
+  }
+
+  public void zeroHeading() {
+    navx.reset();
   }
 
   public CANSparkMax getRightLeader() {
@@ -171,6 +308,10 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     SmartDashboard.putBoolean("Boosted", this.isBoosted());
     SmartDashboard.putBoolean("Creep", this.isCreeping());
     SmartDashboard.putBoolean("Normal", this.isNormal());
+
+    SmartDashboard.putNumber("Gyro Heading", getHeading());
+    SmartDashboard.putNumber("Left Encoder Value (feet)", getLeftEncoderPosition());
+    SmartDashboard.putNumber("Right Encoder Value (feet) ", getRightEncoderPosition());
 
     if (navXDebugMode) {
       SmartDashboard.putBoolean("IMU_Connected", navx.isConnected());

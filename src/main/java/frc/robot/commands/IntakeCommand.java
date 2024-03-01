@@ -19,7 +19,7 @@ public class IntakeCommand extends Command {
 
     @Override
     public void execute() {
-        intake.intake(Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT);
+        intake.intake(1);
         
     }
 

@@ -4,22 +4,22 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 public  class RevUpShooterSeconds extends Command {
-    private Shooter shooter;
-    private double seconds;
-    private double power;
+    private final Shooter shooter;
+    private final double seconds;
+    private final double power;
 
-    private double startingtime;
+    private double startingTime;
 
     public RevUpShooterSeconds(Shooter shooter, double seconds, double power) {
        addRequirements(shooter);
        this.shooter = shooter;
-        this.seconds = seconds;
+       this.seconds = seconds;
        this.power = power;  
     }
 
     @Override
     public void initialize() {
-      startingtime = System.currentTimeMillis();
+      startingTime = System.currentTimeMillis();
     }
 
     @Override
@@ -33,6 +33,6 @@ public  class RevUpShooterSeconds extends Command {
 
     @Override 
     public boolean isFinished() {
-      return System.currentTimeMillis() - startingtime > (seconds * 1000);
+      return System.currentTimeMillis() - startingTime > (seconds * 1000);
     }
 }
