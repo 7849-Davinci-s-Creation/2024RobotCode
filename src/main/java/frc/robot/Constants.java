@@ -16,7 +16,7 @@ public final class Constants {
     // TODO: needs to be changed when wired.
     public static final int INTAKE_SWITCH = 0;
     public static final double OUT_SECONDS = 2;
-    public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 1;
+    public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 0.5;
   }
 
   public static class MotorConstants {
@@ -77,6 +77,6 @@ public final class Constants {
   public static class ShooterConstants {
     public static final double REV_TIME = 1.5;
     public static final double SPEAKER_PERCENT_OUTPUT = 1;
-    public static final double AMP_PERCENT_OUTPUT = 0.70;
+    public static final double AMP_PERCENT_OUTPUT = 0.417;
   }
 }

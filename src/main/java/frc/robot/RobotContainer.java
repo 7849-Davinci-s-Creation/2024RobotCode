@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.AutoTurnaround;
 import frc.robot.commands.BuiltCommands;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IntakeCommand;
@@ -44,9 +45,10 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     driveTrain.setDefaultCommand(new Drive(driverController.getHID(), driveTrain));
+    driverController.circle().onTrue(new AutoTurnaround(driveTrain));
     operatorController.a().whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.SPEAKER_PERCENT_OUTPUT)).onFalse(new MurderShooter(shooter));
     operatorController.x().whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.AMP_PERCENT_OUTPUT)).onFalse(new MurderShooter(shooter));
-    operatorController.b().whileTrue(new IntakeCommand(intake)).onFalse(new RunIntakeSeconds(intake, 0.5, -1));
+    operatorController.b().whileTrue(new IntakeCommand(intake)).onFalse(new RunIntakeSeconds(intake, 0.5, -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
   }
 
   public Command getAutonomousCommand() {
