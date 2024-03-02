@@ -5,11 +5,11 @@ import frc.robot.subsystems.Shooter;
 
 public class ShootCommand extends Command {
 
-    private final Shooter shoot;
+    private final Shooter shooter;
     private final double power;
 
     public ShootCommand(Shooter shoot, double power) {
-        this.shoot = shoot;
+        this.shooter = shoot;
         this.power = power;
         addRequirements(shoot);
     }
@@ -21,7 +21,7 @@ public class ShootCommand extends Command {
 
     @Override
     public void execute() {
-        shoot.shoot(power);
+        shooter.shoot(power);
     }
 
     @Override
