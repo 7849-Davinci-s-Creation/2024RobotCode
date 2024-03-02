@@ -35,6 +35,10 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
         return this.shooterPID;
     }
 
+    public RelativeEncoder getShooterEncoder() {
+        return this.shooterEncoder;
+    }
+
     @Override
     public void periodic() {
         this.configureDashboard();
@@ -46,6 +50,6 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
 
     @Override
     public void configureDashboard() {
-        SmartDashboard.putNumber("shooter RPM", 0);
+        SmartDashboard.putNumber("shooter RPM", shooterEncoder.getVelocity());
     }
 }
