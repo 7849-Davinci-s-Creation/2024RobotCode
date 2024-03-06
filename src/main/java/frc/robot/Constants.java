@@ -77,9 +77,9 @@ public final class Constants {
     public static final double REV_TIME = 1.5;
     public static final double SPEAKER_PERCENT_OUTPUT = 1;
     public static final double OPTIMAL_AMP_RPM = 1;
-    public static final double P = 0.08;
-    public static final double I = 0;
-    public static final double D = 0;
-    public static final double OPTIMAL_SPEAKER_RPM = 6000;
+    public static final double P = 0.000314156269;
+    public static final double I = 0.001;
+    public static final double D = 0.000031;
+    public static final double OPTIMAL_SPEAKER_RPM = 6200;
   }
 }

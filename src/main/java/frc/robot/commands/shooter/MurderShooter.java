@@ -18,7 +18,7 @@ public class MurderShooter extends Command {
 
     @Override
     public void execute() {
-        shoot.shoot(0);
+        shoot.murder();
     }
 
     @Override
