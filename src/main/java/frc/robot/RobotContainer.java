@@ -46,8 +46,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     driveTrain.setDefaultCommand(new Drive(driverController.getHID(), driveTrain));
     driverController.circle().onTrue(new AutoTurnaround(driveTrain));
-    operatorController.a().whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.SPEAKER_PERCENT_OUTPUT)).onFalse(new MurderShooter(shooter));
-    operatorController.x().whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.AMP_PERCENT_OUTPUT)).onFalse(new MurderShooter(shooter));
+    operatorController.a().whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)).onFalse(new MurderShooter(shooter));
+    operatorController.x().whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.OPTIMAL_AMP_RPM)).onFalse(new MurderShooter(shooter));
     operatorController.b().whileTrue(new IntakeCommand(intake)).onFalse(new RunIntakeSeconds(intake, 0.5, -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
   }
 

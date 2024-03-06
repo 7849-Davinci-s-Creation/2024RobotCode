@@ -6,15 +6,15 @@ import frc.robot.subsystems.Shooter;
 public  class RevUpShooterSeconds extends Command {
     private final Shooter shooter;
     private final double seconds;
-    private final double power;
+    private final double rpm;
 
     private double startingTime;
 
-    public RevUpShooterSeconds(Shooter shooter, double seconds, double power) {
+    public RevUpShooterSeconds(Shooter shooter, double seconds, double rpm) {
        addRequirements(shooter);
        this.shooter = shooter;
        this.seconds = seconds;
-       this.power = power;  
+       this.rpm = rpm;  
     }
 
     @Override
@@ -24,7 +24,7 @@ public  class RevUpShooterSeconds extends Command {
 
     @Override
     public void execute() {
-        shooter.shoot(power);
+        shooter.shoot(rpm);
     }
 
     @Override

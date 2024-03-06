@@ -76,10 +76,10 @@ public final class Constants {
   public static class ShooterConstants {
     public static final double REV_TIME = 1.5;
     public static final double SPEAKER_PERCENT_OUTPUT = 1;
-    public static final double AMP_PERCENT_OUTPUT = 0.417;
+    public static final double OPTIMAL_AMP_RPM = 1;
     public static final double P = 0.08;
     public static final double I = 0;
     public static final double D = 0;
-    public static final double OPTIMAL_SPEAKER_OUTPUT = 11;
+    public static final double OPTIMAL_SPEAKER_RPM = 6000;
   }
 }

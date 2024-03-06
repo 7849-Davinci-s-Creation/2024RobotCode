@@ -25,8 +25,8 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
         bottomFlyWheel.setInverted(true);
     }
 
-    public void shoot(double output) {
-        topFlyWheel.set(output);
+    public void shoot(double wantedRPM) {
+        topFlyWheel.set(shooterPID.calculate(shooterEncoder.getVelocity(),wantedRPM));
     }
 
     public PIDController getController() {

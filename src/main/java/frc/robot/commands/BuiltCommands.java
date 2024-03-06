@@ -11,12 +11,12 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 public class BuiltCommands {
-    public static Command shootSequence(Shooter shoot, Intake intake, double power) {
+    public static Command shootSequence(Shooter shoot, Intake intake, double rpm) {
         return new SequentialCommandGroup(
-                new RevUpShooterSeconds(shoot, Constants.ShooterConstants.REV_TIME, power),
+                new RevUpShooterSeconds(shoot, Constants.ShooterConstants.REV_TIME, rpm),
                 new ParallelCommandGroup(
                         new RunIntakeSeconds(intake, Constants.IntakeConstants.OUT_SECONDS, Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT),
-                        new ShootCommand(shoot, power))
+                        new ShootCommand(shoot, rpm))
 
         );
     }
