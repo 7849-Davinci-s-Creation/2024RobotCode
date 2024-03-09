@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -21,6 +23,8 @@ import frc.robot.subsystems.Shooter;
 import lib.DashboardManager;
 
 public class RobotContainer {
+  private final SendableChooser<Command> autoMenu = Autos.getAutoMenu();
+
   // Subsystems
   private final DriveTrain driveTrain = new DriveTrain();
   private final Intake intake = new Intake();
@@ -46,6 +50,10 @@ public class RobotContainer {
     // Configure Subsystems dashboard configurations
     DashboardManager.configureDashboards();
 
+    configureAutoMenu();
+
+    SmartDashboard.putData(autoMenu);
+
     // We can set debug mode like so
     setDebugMode(true);
   }
@@ -65,10 +73,10 @@ public class RobotContainer {
 
   private void configureAutoMenu() {
     if (debugMode) {
-      Autos.getAutoMenu().addOption("Quasistatic Forward", Autos.sysIDQuasistatic(driveTrain, Direction.kForward));
-      Autos.getAutoMenu().addOption("Quasistatic Reverse", Autos.sysIDQuasistatic(driveTrain, Direction.kReverse));
-      Autos.getAutoMenu().addOption("Dynamic Forward", Autos.sysIDDynamic(driveTrain, Direction.kForward));
-      Autos.getAutoMenu().addOption("Dynamic Reverse", Autos.sysIDDynamic(driveTrain, Direction.kReverse));
+      autoMenu.addOption("Quasistatic Forward", Autos.sysIDQuasistatic(driveTrain, Direction.kForward));
+      autoMenu.addOption("Quasistatic Reverse", Autos.sysIDQuasistatic(driveTrain, Direction.kReverse));
+      autoMenu.addOption("Dynamic Forward", Autos.sysIDDynamic(driveTrain, Direction.kForward));
+      autoMenu.addOption("Dynamic Reverse", Autos.sysIDDynamic(driveTrain, Direction.kReverse));
     }
   }
 
