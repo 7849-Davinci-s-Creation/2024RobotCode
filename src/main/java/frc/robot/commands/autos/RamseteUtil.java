@@ -85,8 +85,8 @@ public class RamseteUtil {
         );
 
         TrajectoryConfig config = new TrajectoryConfig(
-                Constants.AutoConstants.MAX_METERS_PER_SECOND,
-                Constants.AutoConstants.MAX_METERS_PER_SECOND_SQUARED
+                Constants.DriveTrainConstants.MAX_SPEED_MPS,
+                Constants.DriveTrainConstants.MAX_ACCELERATION_MPS_SQ
         ).setKinematics(driveTrain.getKinematics())
                 .addConstraint(voltageConstraint);
 
