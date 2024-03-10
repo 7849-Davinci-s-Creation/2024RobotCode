@@ -73,6 +73,7 @@ public class RamseteUtil {
         }
     }
 
+    // https://youtu.be/yVmJDOE3M2Y what path should look like.
     public static Command testRamseteTrajectory(DriveTrain driveTrain) {
         DifferentialDriveVoltageConstraint voltageConstraint = new DifferentialDriveVoltageConstraint(
                 new SimpleMotorFeedforward(
