@@ -5,10 +5,12 @@ import frc.robot.subsystems.Shooter;
 
 public class ShootCommand extends Command {
 
-    private final Shooter shoot;
+    private final Shooter shooter;
+    private final double rpm;
 
-    public ShootCommand(Shooter shoot) {
-        this.shoot = shoot;
+    public ShootCommand(Shooter shoot, double rpm) {
+        this.shooter = shoot;
+        this.rpm = rpm;
         addRequirements(shoot);
     }
 
@@ -19,7 +21,7 @@ public class ShootCommand extends Command {
 
     @Override
     public void execute() {
-        shoot.shoot(1);
+        shooter.shoot(rpm);
     }
 
     @Override

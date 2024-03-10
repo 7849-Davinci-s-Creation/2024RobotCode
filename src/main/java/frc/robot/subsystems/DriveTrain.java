@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import lib.DashboardConfiguration;
 
 import static edu.wpi.first.units.Units.*;
@@ -64,8 +65,6 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
   private boolean isCreeping = false;
   private boolean isNormal = true;
   private boolean isInverted = false;
-
-  private boolean navXDebugMode = false;
 
   public DriveTrain() {
     zeroHeading();
@@ -270,10 +269,6 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     this.isInverted = isInverted;
   }
 
-  public void setNavXDebugMode(boolean debug) {
-    this.navXDebugMode = debug;
-  }
-
   public void setNormalDriving() {
     this.setBoosted(false);
     this.setCreeping(false);
@@ -290,6 +285,10 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     this.setBoosted(false);
     this.setCreeping(true);
     this.setNormal(false);
+  }
+
+  public SysIdRoutine getRoutine() {
+    return this.driveTrainRoutine;
   }
 
   @Override
@@ -313,7 +312,7 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     SmartDashboard.putNumber("Left Encoder Value (feet)", getLeftEncoderPosition());
     SmartDashboard.putNumber("Right Encoder Value (feet) ", getRightEncoderPosition());
 
-    if (navXDebugMode) {
+    if (RobotContainer.isDebugMode()) {
       SmartDashboard.putBoolean("IMU_Connected", navx.isConnected());
       SmartDashboard.putBoolean("IMU_IsCalibrating", navx.isCalibrating());
       SmartDashboard.putNumber("IMU_Yaw", navx.getYaw());

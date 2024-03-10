@@ -15,6 +15,8 @@ public final class Constants {
   public static class IntakeConstants {
     // TODO: needs to be changed when wired.
     public static final int INTAKE_SWITCH = 0;
+    public static final double OUT_SECONDS = 2;
+    public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 0.5;
   }
 
   public static class MotorConstants {
@@ -55,8 +57,7 @@ public final class Constants {
     public static final double GEAR_RATIO = 0;
     public static final double WHEEL_RADIUS_INCHES = 3;
     public static final double LINEAR_CONVERSION_FACTOR = Units.inchesToMeters(
-            1/(GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(WHEEL_RADIUS_INCHES)) * 10)
-            ;
+            1/(GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(WHEEL_RADIUS_INCHES)) * 10);
   }
 
   public static final class VisionConstants {
@@ -70,5 +71,15 @@ public final class Constants {
     public static final double AIM_ANGULAR_P = 0;
     public static final double AIM_ANGULAR_D = 0;
     public static final String CAMERA_NAME = "";
+  }
+
+  public static class ShooterConstants {
+    public static final double REV_TIME = 1.5;
+    public static final double SPEAKER_PERCENT_OUTPUT = 1;
+    public static final double OPTIMAL_AMP_RPM = 1;
+    public static final double P = 0.000314156269;
+    public static final double I = 0.001;
+    public static final double D = 0.000031;
+    public static final double OPTIMAL_SPEAKER_RPM = 6200;
   }
 }
