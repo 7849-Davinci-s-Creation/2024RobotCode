@@ -13,7 +13,6 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
-    // TODO: needs to be changed when wired.
     public static final int INTAKE_SWITCH = 0;
     public static final double OUT_SECONDS = 2;
     public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 0.5;
@@ -37,7 +36,6 @@ public final class Constants {
   }
 
   public static class DriveTrainConstants {
-    //TODO: might need to be changed depending on field and robot weight.
     public static final double TORQUE_RESISTANCE_THRESHOLD = 0.05;
     public static final double JOYSTICK_DEADZONE_DRIVE = 0.0055;
     public static final double JOYSTICK_DEADZONE_ROTATE = 0.0055;
@@ -75,7 +73,6 @@ public final class Constants {
 
   public static class ShooterConstants {
     public static final double REV_TIME = 1.5;
-    public static final double SPEAKER_PERCENT_OUTPUT = 1;
     public static final double OPTIMAL_AMP_RPM = 1;
     public static final double P = 0.000314156269;
     public static final double I = 0.001;
