@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,4 +26,11 @@ public class Autos {
         return driveTrain.getRoutine().dynamic(direction);
     }
 
+    public static Command testRamseteExampleTrajectory(DriveTrain driveTrain) {
+        return RamseteUtil.testRamseteTrajectory(driveTrain);
+    }
+
+    public static Command testRamsetePathWeaverPath(DriveTrain driveTrain, String pathFile) {
+        return RamseteUtil.loadPathWeaverTrajectoryToRamseteCommand(pathFile, true, driveTrain);
+    }
 }

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AutoTurnaround;
-import frc.robot.commands.Autos;
+import frc.robot.commands.autos.Autos;
 import frc.robot.commands.BuiltCommands;
 import frc.robot.commands.Drive;
 import frc.robot.commands.IntakeCommand;
@@ -39,6 +39,9 @@ public class RobotContainer {
       Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
   public RobotContainer() {
+    // set debug mode true / false
+    setDebugMode(true);
+
     // Configure the button bindings
     configureButtonBindings();
 
@@ -53,9 +56,6 @@ public class RobotContainer {
     configureAutoMenu();
 
     SmartDashboard.putData(autoMenu);
-
-    // We can set debug mode like so
-    setDebugMode(true);
   }
 
   private void configureButtonBindings() {
@@ -77,6 +77,8 @@ public class RobotContainer {
       autoMenu.addOption("Quasistatic Reverse", Autos.sysIDQuasistatic(driveTrain, Direction.kReverse));
       autoMenu.addOption("Dynamic Forward", Autos.sysIDDynamic(driveTrain, Direction.kForward));
       autoMenu.addOption("Dynamic Reverse", Autos.sysIDDynamic(driveTrain, Direction.kReverse));
+
+      autoMenu.addOption("Test Ramsete Trajectory", Autos.testRamseteExampleTrajectory(driveTrain));
     }
   }
 

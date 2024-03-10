@@ -82,4 +82,9 @@ public final class Constants {
     public static final double D = 0.000031;
     public static final double OPTIMAL_SPEAKER_RPM = 6200;
   }
+
+  public static final class AutoConstants {
+    public static final double MAX_METERS_PER_SECOND = 1;
+    public static final double MAX_METERS_PER_SECOND_SQUARED = 1;
+  }
 }

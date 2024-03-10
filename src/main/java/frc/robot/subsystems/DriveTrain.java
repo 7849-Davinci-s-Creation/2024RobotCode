@@ -1,21 +1,17 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.units.*;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -40,6 +36,8 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
   private final RelativeEncoder rightEncoder = rightFrontMotor.getEncoder();
 
   private final AHRS navx = new AHRS(SPI.Port.kMXP);
+
+  private final DifferentialDrive differentialDrive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
 
   private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.TRACK_WIDTH_METERS);
 
@@ -89,18 +87,6 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     leftEncoder.setVelocityConversionFactor(Constants.DriveTrainConstants.LINEAR_CONVERSION_FACTOR / 60);
     rightEncoder.setVelocityConversionFactor(Constants.DriveTrainConstants.LINEAR_CONVERSION_FACTOR / 60);
 
-    AutoBuilder.configureRamsete(
-            this::getPose2d,
-            this::resetOdometry,
-            this::getWheelSpeeds,
-            this::pathDrive,
-            new ReplanningConfig(),
-            () -> {
-              var alliance = DriverStation.getAlliance();
-              return alliance.filter(value -> value == DriverStation.Alliance.Blue).isPresent();
-            },
-            this
-    );
   }
 
   public void arcadeDrive(double rotate, double drive) {
@@ -134,15 +120,10 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     rightFrontMotor.setVoltage(volts.in(Volts));
   }
 
-  public void pathDrive(ChassisSpeeds speeds) {
-    DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(speeds);
-    SimpleMotorFeedforward feeder = new SimpleMotorFeedforward(Constants.SysIDValues.KS, Constants.SysIDValues.KV);
-
-    double leftRadPerSeconds = wheelSpeeds.leftMetersPerSecond / edu.wpi.first.math.util.Units.inchesToMeters(Constants.DriveTrainConstants.WHEEL_RADIUS_INCHES);
-    double rightRadPerSeconds = wheelSpeeds.rightMetersPerSecond / edu.wpi.first.math.util.Units.inchesToMeters(Constants.DriveTrainConstants.WHEEL_RADIUS_INCHES);
-
-    leftFrontMotor.setVoltage(feeder.calculate(leftRadPerSeconds));
-    rightFrontMotor.setVoltage(feeder.calculate(rightRadPerSeconds));
+  public void voltageTankDrive(double leftVolts, double rightVolts) {
+    leftFrontMotor.setVoltage(leftVolts);
+    rightFrontMotor.setVoltage(rightVolts);
+    differentialDrive.feed();
   }
 
   public double applyCurve(double position) {
@@ -215,10 +196,8 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
             pose);
   }
 
-  public ChassisSpeeds getWheelSpeeds() {
-    return kinematics.toChassisSpeeds(
-            new DifferentialDriveWheelSpeeds(
-                    leftEncoder.getVelocity(), rightEncoder.getVelocity()));
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(leftEncoder.getVelocity(), rightEncoder.getVelocity());
   }
 
   public double getAverageEncoderDistance() {
@@ -235,6 +214,10 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
 
   public CANSparkMax getLeftLeader() {
     return this.leftFrontMotor;
+  }
+
+  public DifferentialDriveKinematics getKinematics() {
+    return this.kinematics;
   }
 
   public Boolean isBoosted() {
@@ -293,6 +276,7 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
 
   @Override
   public void periodic() {
+    odometry.update(navx.getRotation2d(), leftEncoder.getPosition(), rightEncoder.getPosition());
     this.configureDashboard();
   }
 
