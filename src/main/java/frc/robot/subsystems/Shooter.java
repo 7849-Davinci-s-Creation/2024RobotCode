@@ -20,6 +20,7 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
             Constants.ShooterConstants.I, Constants.ShooterConstants.D);
 
     public Shooter() {
+        topFlyWheel.setInverted(true);
         bottomFlyWheel.follow(topFlyWheel);
     }
 

@@ -47,12 +47,12 @@ public final class Constants {
     public static final double CREEP_ROTATE_NERF = 0.25;
 
     //TODO: change these to our robots specs
-    public static final double TRACK_WIDTH_METERS = 0; // <--
+    public static final double TRACK_WIDTH_METERS = 0.584;
     public static final double MAX_SPEED_MPS = 1;
     public static final double MAX_ACCELERATION_MPS_SQ = 1;
     public static final double RAMSETE_B = 2;
     public static final double RAMSETE_Z = 0.7;
-    public static final double GEAR_RATIO = 0; // <--
+    public static final double GEAR_RATIO = 8.46; 
     public static final double WHEEL_RADIUS_INCHES = 3;
     public static final double LINEAR_CONVERSION_FACTOR = Units.inchesToMeters(
             1/(GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(WHEEL_RADIUS_INCHES)) * 10);
