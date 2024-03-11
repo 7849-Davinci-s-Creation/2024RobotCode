@@ -39,21 +39,22 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
 
   private final DifferentialDrive differentialDrive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
 
-  private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.DriveTrainConstants.TRACK_WIDTH_METERS);
+  private final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
+      Constants.DriveTrainConstants.TRACK_WIDTH_METERS);
 
   private final MutableMeasure<Voltage> appliedVoltage = MutableMeasure.mutable(Volts.of(0));
   private final MutableMeasure<Distance> distance = MutableMeasure.mutable(Meters.of(0));
   private final MutableMeasure<Velocity<Distance>> velocity = MutableMeasure.mutable(MetersPerSecond.of(0));
 
   private final SysIdRoutine.Config config = new SysIdRoutine.Config(Volts.of(1).per(Seconds.of(1)),
-          Volts.of(3),
-          Seconds.of(3),
-          null);
+      Volts.of(3),
+      Seconds.of(3),
+      null);
 
   private final SysIdRoutine.Mechanism mechanism = new SysIdRoutine.Mechanism(
-          this::voltageDrive,
-          this::log,
-          this);
+      this::voltageDrive,
+      this::log,
+      this);
 
   private final SysIdRoutine driveTrainRoutine = new SysIdRoutine(config, mechanism);
 
@@ -154,15 +155,15 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     int numberOfEntries = 2;
 
     double averageVoltage = ((leftFrontMotor.getAppliedOutput() * leftFrontMotor.getBusVoltage()) +
-            (rightFrontMotor.getAppliedOutput() * rightFrontMotor.getBusVoltage())) / numberOfEntries;
+        (rightFrontMotor.getAppliedOutput() * rightFrontMotor.getBusVoltage())) / numberOfEntries;
     double averageLinearPosition = (getLeftEncoderPosition() + getRightEncoderPosition()) / numberOfEntries;
     double averageLinearVelocity = (leftEncoder.getVelocity() + rightEncoder.getVelocity()) / numberOfEntries;
 
     // drivetrain
     log.motor("drivetrain")
-            .voltage(appliedVoltage.mut_replace(averageVoltage, Volts))
-            .linearPosition(distance.mut_replace(averageLinearPosition, Meters))
-            .linearVelocity(velocity.mut_replace(averageLinearVelocity, MetersPerSecond));
+        .voltage(appliedVoltage.mut_replace(averageVoltage, Volts))
+        .linearPosition(distance.mut_replace(averageLinearPosition, Meters))
+        .linearVelocity(velocity.mut_replace(averageLinearVelocity, MetersPerSecond));
   }
 
   public void resetEncoders() {
@@ -193,7 +194,7 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
     odometry.resetPosition(navx.getRotation2d(), getLeftEncoderPosition(), getRightEncoderPosition(),
-            pose);
+        pose);
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
@@ -292,87 +293,10 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     SmartDashboard.putBoolean("Creep", this.isCreeping());
     SmartDashboard.putBoolean("Normal", this.isNormal());
 
-    SmartDashboard.putNumber("Gyro Heading", getHeading());
-    SmartDashboard.putNumber("Left Encoder Value (feet)", getLeftEncoderPosition());
-    SmartDashboard.putNumber("Right Encoder Value (feet) ", getRightEncoderPosition());
-
     if (RobotContainer.isDebugMode()) {
-      SmartDashboard.putBoolean("IMU_Connected", navx.isConnected());
-      SmartDashboard.putBoolean("IMU_IsCalibrating", navx.isCalibrating());
-      SmartDashboard.putNumber("IMU_Yaw", navx.getYaw());
-      SmartDashboard.putNumber("IMU_Pitch", navx.getPitch());
-      SmartDashboard.putNumber("IMU_Roll", navx.getRoll());
-
-      /* Display tilt-corrected, Magnetometer-based heading (requires */
-      /* magnetometer calibration to be useful) */
-
-      SmartDashboard.putNumber("IMU_CompassHeading", navx.getCompassHeading());
-
-      /* Display 9-axis Heading (requires magnetometer calibration to be useful) */
-      SmartDashboard.putNumber("IMU_FusedHeading", navx.getFusedHeading());
-
-      /* These functions are compatible w/the WPI Gyro Class, providing a simple */
-      /* path for upgrading from the Kit-of-Parts gyro to the navx-MXP */
-
-      SmartDashboard.putNumber("IMU_TotalYaw", navx.getAngle());
-      SmartDashboard.putNumber("IMU_YawRateDPS", navx.getRate());
-
-      /* Display Processed Acceleration Data (Linear Acceleration, Motion Detect) */
-
-      SmartDashboard.putNumber("IMU_Accel_X", navx.getWorldLinearAccelX());
-      SmartDashboard.putNumber("IMU_Accel_Y", navx.getWorldLinearAccelY());
-      SmartDashboard.putBoolean("IMU_IsMoving", navx.isMoving());
-      SmartDashboard.putBoolean("IMU_IsRotating", navx.isRotating());
-
-      /* Display estimates of velocity/displacement. Note that these values are */
-      /* not expected to be accurate enough for estimating robot position on a */
-      /* FIRST FRC Robotics Field, due to accelerometer noise and the compounding */
-      /* of these errors due to single (velocity) integration and especially */
-      /* double (displacement) integration. */
-
-      SmartDashboard.putNumber("Velocity_X", navx.getVelocityX());
-      SmartDashboard.putNumber("Velocity_Y", navx.getVelocityY());
-      SmartDashboard.putNumber("Displacement_X", navx.getDisplacementX());
-      SmartDashboard.putNumber("Displacement_Y", navx.getDisplacementY());
-
-      /* Display Raw Gyro/Accelerometer/Magnetometer Values */
-      /* NOTE: These values are not normally necessary, but are made available */
-      /* for advanced users. Before using this data, please consider whether */
-      /* the processed data (see above) will suit your needs. */
-
-      SmartDashboard.putNumber("RawGyro_X", navx.getRawGyroX());
-      SmartDashboard.putNumber("RawGyro_Y", navx.getRawGyroY());
-      SmartDashboard.putNumber("RawGyro_Z", navx.getRawGyroZ());
-      SmartDashboard.putNumber("RawAccel_X", navx.getRawAccelX());
-      SmartDashboard.putNumber("RawAccel_Y", navx.getRawAccelY());
-      SmartDashboard.putNumber("RawAccel_Z", navx.getRawAccelZ());
-      SmartDashboard.putNumber("RawMag_X", navx.getRawMagX());
-      SmartDashboard.putNumber("RawMag_Y", navx.getRawMagY());
-      SmartDashboard.putNumber("RawMag_Z", navx.getRawMagZ());
-      SmartDashboard.putNumber("IMU_Temp_C", navx.getTempC());
-
-      /* Omnimount Yaw Axis Information */
-      /* For more info, see http://navx-mxp.kauailabs.com/installation/omnimount */
-      AHRS.BoardYawAxis yaw_axis = navx.getBoardYawAxis();
-      SmartDashboard.putString("YawAxisDirection", yaw_axis.up ? "Up" : "Down");
-      SmartDashboard.putNumber("YawAxis", yaw_axis.board_axis.getValue());
-
-      /* Sensor Board Information */
-      SmartDashboard.putString("FirmwareVersion", navx.getFirmwareVersion());
-
-      /* Quaternion Data */
-      /* Quaternions are fascinating, and are the most compact representation of */
-      /* orientation data. All of the Yaw, Pitch and Roll Values can be derived */
-      /* from the Quaternions. If interested in motion processing, knowledge of */
-      /* Quaternions is highly recommended. */
-      SmartDashboard.putNumber("QuaternionW", navx.getQuaternionW());
-      SmartDashboard.putNumber("QuaternionX", navx.getQuaternionX());
-      SmartDashboard.putNumber("QuaternionY", navx.getQuaternionY());
-      SmartDashboard.putNumber("QuaternionZ", navx.getQuaternionZ());
-
-      /* Connectivity Debugging Support */
-      SmartDashboard.putNumber("IMU_Byte_Count", navx.getByteCount());
-      SmartDashboard.putNumber("IMU_Update_Count", navx.getUpdateCount());
+      SmartDashboard.putNumber("Gyro Heading", getHeading());
+      SmartDashboard.putNumber("Left Encoder Value (feet)", getLeftEncoderPosition());
+      SmartDashboard.putNumber("Right Encoder Value (feet) ", getRightEncoderPosition());
     }
   }
 }
