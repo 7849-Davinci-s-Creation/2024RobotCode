@@ -15,7 +15,7 @@ public final class Constants {
   public static class IntakeConstants {
     public static final int INTAKE_SWITCH = 0;
     public static final double OUT_SECONDS = 2;
-    public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 0.5;
+    public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 0.8;
   }
 
   public static class MotorConstants {
