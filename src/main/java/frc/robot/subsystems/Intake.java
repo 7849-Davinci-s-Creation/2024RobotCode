@@ -29,6 +29,10 @@ public class Intake extends SubsystemBase implements DashboardConfiguration {
         intakeMotor.set(TalonSRXControlMode.PercentOutput, current);
     }
 
+    public double getCurrent() {
+        return this.intakeMotor.getSupplyCurrent();
+    }
+
     @Override
     public void periodic() {
         this.configureDashboard();
@@ -41,5 +45,6 @@ public class Intake extends SubsystemBase implements DashboardConfiguration {
     @Override
     public void configureDashboard() {
         SmartDashboard.putBoolean("Has Note", hasNote());
+        SmartDashboard.putNumber("Intake Current", intakeMotor.getSupplyCurrent());
     }
 }
