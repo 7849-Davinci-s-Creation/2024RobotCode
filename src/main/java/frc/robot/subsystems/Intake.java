@@ -11,18 +11,9 @@ import lib.DashboardConfiguration;
 
 public class Intake extends SubsystemBase implements DashboardConfiguration {
     private final TalonSRX intakeMotor = new TalonSRX(Constants.MotorConstants.INTAKE_MOTOR);
-    private final DigitalInput limitSwitch = new DigitalInput(Constants.IntakeConstants.INTAKE_SWITCH);
 
     public Intake() {
         intakeMotor.setInverted(true);
-    }
-
-    public boolean hasNote() {
-        return this.limitSwitch.get();
-    }
-
-    public DigitalInput getLimitSwitch() {
-        return this.limitSwitch;
     }
 
     public void intake(double current) {
@@ -44,7 +35,6 @@ public class Intake extends SubsystemBase implements DashboardConfiguration {
 
     @Override
     public void configureDashboard() {
-        SmartDashboard.putBoolean("Has Note", hasNote());
         SmartDashboard.putNumber("Intake Current", intakeMotor.getSupplyCurrent());
     }
 }
