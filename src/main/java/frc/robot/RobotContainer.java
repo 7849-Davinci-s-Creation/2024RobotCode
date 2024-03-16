@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.AutoTurnaround;
+import frc.robot.commands.drivetrain.AutoTurnaround;
 import frc.robot.commands.autos.Autos;
 import frc.robot.commands.BuiltCommands;
-import frc.robot.commands.Drive;
-import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.drivetrain.Drive;
+import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.shooter.MurderShooter;
 import frc.robot.commands.timedcommands.RunIntakeSeconds;
 import frc.robot.subsystems.DriveTrain;
@@ -60,15 +60,27 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     driveTrain.setDefaultCommand(new Drive(driverController.getHID(), driveTrain));
+
     driverController.circle().onTrue(new AutoTurnaround(driveTrain));
+
+    // Shoot Speaker
     operatorController.a()
         .whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM))
         .onFalse(new MurderShooter(shooter));
+
+    // Shoot amp
     operatorController.x()
         .whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.OPTIMAL_AMP_RPM))
         .onFalse(new MurderShooter(shooter));
+
+    // Manuel intake
     operatorController.b().whileTrue(new IntakeCommand(intake))
         .onFalse(new RunIntakeSeconds(intake, 0.5, -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
+
+    // Auto Intake
+    operatorController.rightTrigger().whileTrue(
+            BuiltCommands.intakeSequence(intake, operatorController)
+    );
   }
 
   private void configureAutoMenu() {

@@ -13,9 +13,9 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
-    public static final int INTAKE_SWITCH = 0;
     public static final double OUT_SECONDS = 2;
     public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 0.8;
+    public static final double NOTE_INTAKE_VOLTAGE_THRESHOLD = 10;
   }
 
   public static class MotorConstants {
@@ -46,7 +46,6 @@ public final class Constants {
     public static final double CREEP_DRIVE_NERF = 0.25;
     public static final double CREEP_ROTATE_NERF = 0.25;
 
-    //TODO: change these to our robots specs
     public static final double TRACK_WIDTH_METERS = 0.584;
     public static final double MAX_SPEED_MPS = 1;
     public static final double MAX_ACCELERATION_MPS_SQ = 1;
