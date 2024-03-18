@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.drivetrain.AutoTurnaround;
 import frc.robot.commands.autos.Autos;
 import frc.robot.commands.BuiltCommands;
+import frc.robot.commands.RumbleControllerCommand;
 import frc.robot.commands.drivetrain.Drive;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.shooter.MurderShooter;
@@ -79,8 +80,8 @@ public class RobotContainer {
 
     // Auto Intake
     operatorController.rightTrigger().whileTrue(
-            BuiltCommands.intakeSequence(intake, operatorController)
-    );
+            BuiltCommands.intakeSequence(intake, shooter, operatorController)
+    ).onFalse(new RumbleControllerCommand(operatorController, 0));
   }
 
   private void configureAutoMenu() {

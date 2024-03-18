@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class RumbleControllerCommand extends Command {
     private final CommandXboxController controller;
+    private final double rumble;
 
-    public RumbleControllerCommand(CommandXboxController controller) {
+    public RumbleControllerCommand(CommandXboxController controller, double rumble) {
         this.controller = controller;
+        this.rumble = rumble;
     }
 
     @Override
@@ -19,7 +21,7 @@ public class RumbleControllerCommand extends Command {
 
     @Override
     public void execute() {
-        controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 1);
+        controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, rumble);
     }
 
     @Override

@@ -14,6 +14,7 @@ public class IntakeUntilNoteCommand extends Command {
 
     @Override
     public void initialize() {
+        intake.setNoteState(false);
 
     }
 
@@ -25,6 +26,7 @@ public class IntakeUntilNoteCommand extends Command {
     @Override
     public void end(boolean interuppted) {
         intake.intake(0);
+        intake.setNoteState(true);
     }
 
     @Override

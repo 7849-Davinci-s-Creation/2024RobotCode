@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -16,12 +17,16 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
 
     private final RelativeEncoder shooterEncoder = topFlyWheel.getEncoder();
 
+    
+
     private final PIDController shooterPID = new PIDController(Constants.ShooterConstants.P,
             Constants.ShooterConstants.I, Constants.ShooterConstants.D);
 
     public Shooter() {
         topFlyWheel.setInverted(true);
-        bottomFlyWheel.follow(topFlyWheel);
+        // bottomFlyWheel.follow(topFlyWheel);
+        bottomFlyWheel.setInverted(true);
+        topFlyWheel.setIdleMode(IdleMode.kBrake);
     }
 
     public void murder() {
@@ -30,6 +35,7 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
 
     public void shoot(double wantedRPM) {
         topFlyWheel.set(shooterPID.calculate(shooterEncoder.getVelocity(),wantedRPM));
+        bottomFlyWheel.set(shooterPID.calculate(shooterEncoder.getVelocity(),wantedRPM));
     }
 
     public PIDController getController() {
@@ -38,6 +44,10 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
 
     public RelativeEncoder getShooterEncoder() {
         return this.shooterEncoder;
+    }
+
+    public CANSparkMax getBottomSparkMax() {
+        return this.bottomFlyWheel;
     }
 
     @Override

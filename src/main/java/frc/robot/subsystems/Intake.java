@@ -10,6 +10,7 @@ import lib.DashboardConfiguration;
 
 public class Intake extends SubsystemBase implements DashboardConfiguration {
     private final TalonSRX intakeMotor = new TalonSRX(Constants.MotorConstants.INTAKE_MOTOR);
+    boolean hasNote = false;
 
     public Intake() {
         intakeMotor.setInverted(true);
@@ -21,6 +22,14 @@ public class Intake extends SubsystemBase implements DashboardConfiguration {
 
     public double getCurrent() {
         return this.intakeMotor.getSupplyCurrent();
+    }
+
+    public boolean getNoteState() {
+        return this.hasNote;
+    }
+
+    public void setNoteState(boolean state) {
+        this.hasNote = state;
     }
 
     @Override
@@ -35,5 +44,6 @@ public class Intake extends SubsystemBase implements DashboardConfiguration {
     @Override
     public void configureDashboard() {
         SmartDashboard.putNumber("Intake Current", intakeMotor.getSupplyCurrent());
+        SmartDashboard.putBoolean("Note State", getNoteState());
     }
 }
