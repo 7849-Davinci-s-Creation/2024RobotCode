@@ -33,4 +33,8 @@ public class Autos {
     public static Command testRamsetePathWeaverPath(DriveTrain driveTrain, String pathFile) {
         return RamseteUtil.loadPathWeaverTrajectoryToRamseteCommand(pathFile, true, driveTrain);
     }
+
+    public static Command lazyBot() {
+        return null;
+    }
 }

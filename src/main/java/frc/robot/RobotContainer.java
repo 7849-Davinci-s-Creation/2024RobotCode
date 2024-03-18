@@ -73,7 +73,7 @@ public class RobotContainer {
         .whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.OPTIMAL_AMP_RPM))
         .onFalse(new MurderShooter(shooter));
 
-    // Manuel intake
+    // Manule intake
     operatorController.b().whileTrue(new IntakeCommand(intake))
         .onFalse(new RunIntakeSeconds(intake, 0.5, -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
 
@@ -92,6 +92,7 @@ public class RobotContainer {
 
       autoMenu.addOption("Test Ramsete Trajectory", Autos.testRamseteExampleTrajectory(driveTrain));
     }
+    autoMenu.addOption("LazyBot (do nothing..)", Autos.lazyBot());
   }
 
   public Command getAutonomousCommand() {
