@@ -28,12 +28,13 @@ public class IntakeCommand extends Command {
 
     @Override
     public void end(boolean interuppted) {
-
+        intake.intake(0);
+        shooter.getBottomSparkMax().set(0);
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return intake.getNoteState(); // check if beam breaker reads we have note
     }
 
 }

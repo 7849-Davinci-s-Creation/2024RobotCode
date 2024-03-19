@@ -10,7 +10,8 @@ import lib.DashboardConfiguration;
 
 public class Intake extends SubsystemBase implements DashboardConfiguration {
     private final TalonSRX intakeMotor = new TalonSRX(Constants.MotorConstants.INTAKE_MOTOR);
-    boolean hasNote = false;
+    // DigitalInout hasNote = new DigitalInput(Constants.IntakeConstants.BEAM_BREAKER_PORT);
+    boolean hasNote = false; // TODO: change this to digital input when beam break is implemented
 
     public Intake() {
         intakeMotor.setInverted(true);
@@ -26,10 +27,6 @@ public class Intake extends SubsystemBase implements DashboardConfiguration {
 
     public boolean getNoteState() {
         return this.hasNote;
-    }
-
-    public void setNoteState(boolean state) {
-        this.hasNote = state;
     }
 
     @Override

@@ -16,6 +16,7 @@ public final class Constants {
     public static final double OUT_SECONDS = 2;
     public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 0.8;
     public static final double NOTE_INTAKE_VOLTAGE_THRESHOLD = 10;
+    public static final int BEAM_BREAKER_PORT = 0;
   }
 
   public static class MotorConstants {
