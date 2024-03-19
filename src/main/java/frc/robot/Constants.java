@@ -13,10 +13,10 @@ public final class Constants {
   }
 
   public static class IntakeConstants {
-    // TODO: needs to be changed when wired.
-    public static final int INTAKE_SWITCH = 0;
     public static final double OUT_SECONDS = 2;
-    public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 0.5;
+    public static final double INTAKE_GENERAL_PERCENT_OUTPUT = 0.8;
+    public static final double NOTE_INTAKE_VOLTAGE_THRESHOLD = 10;
+    public static final int BEAM_BREAKER_PORT = 0;
   }
 
   public static class MotorConstants {
@@ -37,7 +37,6 @@ public final class Constants {
   }
 
   public static class DriveTrainConstants {
-    //TODO: might need to be changed depending on field and robot weight.
     public static final double TORQUE_RESISTANCE_THRESHOLD = 0.05;
     public static final double JOYSTICK_DEADZONE_DRIVE = 0.0055;
     public static final double JOYSTICK_DEADZONE_ROTATE = 0.0055;
@@ -48,13 +47,12 @@ public final class Constants {
     public static final double CREEP_DRIVE_NERF = 0.25;
     public static final double CREEP_ROTATE_NERF = 0.25;
 
-    //TODO: change these to our robots specs
-    public static final double TRACK_WIDTH_METERS = 0;
+    public static final double TRACK_WIDTH_METERS = 0.584;
     public static final double MAX_SPEED_MPS = 1;
     public static final double MAX_ACCELERATION_MPS_SQ = 1;
     public static final double RAMSETE_B = 2;
     public static final double RAMSETE_Z = 0.7;
-    public static final double GEAR_RATIO = 0;
+    public static final double GEAR_RATIO = 8.46; 
     public static final double WHEEL_RADIUS_INCHES = 3;
     public static final double LINEAR_CONVERSION_FACTOR = Units.inchesToMeters(
             1/(GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(WHEEL_RADIUS_INCHES)) * 10);
@@ -75,7 +73,6 @@ public final class Constants {
 
   public static class ShooterConstants {
     public static final double REV_TIME = 1.5;
-    public static final double SPEAKER_PERCENT_OUTPUT = 1;
     public static final double OPTIMAL_AMP_RPM = 1;
     public static final double P = 0.000314156269;
     public static final double I = 0.001;
