@@ -25,18 +25,18 @@ import lib.DashboardManager;
 public class RobotContainer {
   private final SendableChooser<Command> autoMenu = Autos.getAutoMenu();
 
-  // Subsystems
-  private final DriveTrain driveTrain = new DriveTrain();
-  private final Intake intake = new Intake();
-  private final Shooter shooter = new Shooter();
-
-  private static boolean debugMode = false;
-
   // controllers
   private final CommandPS4Controller driverController = new CommandPS4Controller(
       Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
   private final CommandXboxController operatorController = new CommandXboxController(
       Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT);
+
+  // Subsystems
+  private final DriveTrain driveTrain = new DriveTrain();
+  private final Intake intake = new Intake(operatorController);
+  private final Shooter shooter = new Shooter();
+
+  private static boolean debugMode = false;
 
   public RobotContainer() {
     // set debug mode true / false
@@ -75,7 +75,8 @@ public class RobotContainer {
 
     // Manule intake
     operatorController.b().whileTrue(new IntakeCommand(intake, shooter, operatorController))
-        .onFalse(new RunIntakeSeconds(intake, 0.5, -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
+    .onFalse(new RunIntakeSeconds(intake, 0.2,
+     -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
   }
 
   private void configureAutoMenu() {
@@ -108,7 +109,6 @@ public class RobotContainer {
 
   public void robotPeriodic() {
   }
-
 
   public void disabledInit() {
   }

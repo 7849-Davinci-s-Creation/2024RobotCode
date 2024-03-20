@@ -47,8 +47,8 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
   private final MutableMeasure<Velocity<Distance>> velocity = MutableMeasure.mutable(MetersPerSecond.of(0));
 
   private final SysIdRoutine.Config config = new SysIdRoutine.Config(Volts.of(1).per(Seconds.of(1)),
-      Volts.of(3),
-      Seconds.of(3),
+      Volts.of(4),
+      Seconds.of(5.5),
       null);
 
   private final SysIdRoutine.Mechanism mechanism = new SysIdRoutine.Mechanism(

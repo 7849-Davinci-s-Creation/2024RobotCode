@@ -30,10 +30,10 @@ public final class Constants {
   }
 
   public static class SysIDValues {
-    public static final double KS = 0;
-    public static final double KV = 0;
-    public static final double KA = 0;
-    public static final double KP = 0;
+    public static final double KS = 0; // need to rerun tests for this to not be negative
+    public static final double KV = 1.9293;
+    public static final double KA = 1.3675;
+    public static final double KP = 1.312;
   }
 
   public static class DriveTrainConstants {

@@ -26,23 +26,13 @@ public class IntakeCommand extends Command {
     @Override
     public void execute() {
         intake.intake(Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT);
-        shooter.getBottomSparkMax().set(0.5);
+        //shooter.getBottomSparkMax().set(0.5);
     }
 
     @Override
     public void end(boolean interuppted) {
         intake.intake(0);
-        shooter.getBottomSparkMax().set(0);
-
-        if (controller != null) { // if we specify a controller
-
-            if (isFinished()) { // if we have a note, rumble controller, else stop rumbling it
-                controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.5);
-            } else {
-                controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
-            }
-
-        }
+        //shooter.getBottomSparkMax().set(0);
     }
 
     @Override
