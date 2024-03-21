@@ -152,18 +152,15 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
   }
 
   public void log(SysIdRoutineLog log) {
-    int numberOfEntries = 2;
-
-    double averageVoltage = ((leftFrontMotor.getAppliedOutput() * leftFrontMotor.getBusVoltage()) +
-        (rightFrontMotor.getAppliedOutput() * rightFrontMotor.getBusVoltage())) / numberOfEntries;
-    double averageLinearPosition = (getLeftEncoderPosition() + getRightEncoderPosition()) / numberOfEntries;
-    double averageLinearVelocity = (leftEncoder.getVelocity() + rightEncoder.getVelocity()) / numberOfEntries;
+    double voltage = leftFrontMotor.getAppliedOutput() * leftFrontMotor.getBusVoltage();
+    double linearPosition = getLeftEncoderPosition();
+    double linearVelocity = leftEncoder.getVelocity();
 
     // drivetrain
     log.motor("drivetrain")
-        .voltage(appliedVoltage.mut_replace(averageVoltage, Volts))
-        .linearPosition(distance.mut_replace(averageLinearPosition, Meters))
-        .linearVelocity(velocity.mut_replace(averageLinearVelocity, MetersPerSecond));
+        .voltage(appliedVoltage.mut_replace(voltage, Volts))
+        .linearPosition(distance.mut_replace(linearPosition, Meters))
+        .linearVelocity(velocity.mut_replace(linearVelocity, MetersPerSecond));
   }
 
   public void resetEncoders() {
