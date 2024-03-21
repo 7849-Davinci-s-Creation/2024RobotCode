@@ -23,17 +23,16 @@ import frc.robot.subsystems.Shooter;
 import lib.DashboardManager;
 
 public class RobotContainer {
-  private final SendableChooser<Command> autoMenu = Autos.getAutoMenu();
-
   // controllers
-  private final CommandPS4Controller driverController = new CommandPS4Controller(
-      Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
-  private final CommandXboxController operatorController = new CommandXboxController(
-      Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT);
+  public static final CommandPS4Controller driverController = new CommandPS4Controller(
+          Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
+  public static final CommandXboxController operatorController = new CommandXboxController(
+          Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT);
+  private final SendableChooser<Command> autoMenu = Autos.getAutoMenu();
 
   // Subsystems
   private final DriveTrain driveTrain = new DriveTrain();
-  private final Intake intake = new Intake(operatorController);
+  private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
 
   private static boolean debugMode = false;
