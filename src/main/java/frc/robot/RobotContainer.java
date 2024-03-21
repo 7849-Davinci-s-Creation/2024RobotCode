@@ -73,7 +73,7 @@ public class RobotContainer {
         .onFalse(new MurderShooter(shooter));
 
     // Manule intake
-    operatorController.b().whileTrue(new IntakeCommand(intake, shooter, operatorController))
+    operatorController.b().whileTrue(new IntakeCommand(intake))
     .onFalse(new RunIntakeSeconds(intake, 0.2,
      -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
   }

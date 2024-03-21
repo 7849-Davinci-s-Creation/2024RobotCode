@@ -9,13 +9,9 @@ import frc.robot.subsystems.Shooter;
 
 public class IntakeCommand extends Command {
     private final Intake intake;
-    private final Shooter shooter;
-    private final CommandXboxController controller;
 
-    public IntakeCommand(Intake intake, Shooter shooter, CommandXboxController controller) {
+    public IntakeCommand(Intake intake) {
         this.intake = intake;
-        this.shooter = shooter;
-        this.controller = controller;
         addRequirements(intake);
     }
 
