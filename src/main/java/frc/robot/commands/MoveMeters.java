@@ -2,14 +2,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Intake;
 
 public class MoveMeters extends Command {
     DriveTrain drive;
-    PIDController forward = new PIDController(0, 0, 0);
-    PIDController turn = new PIDController(0, 0, 0);
+    PIDController forward = new PIDController(0.32, 0.12, 0);
+    PIDController turn = new PIDController(0.0033, 0, 0);
     double targetMeters;
     
 

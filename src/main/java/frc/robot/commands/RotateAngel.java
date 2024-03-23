@@ -13,7 +13,7 @@ public class RotateAngel extends Command {
     public RotateAngel(DriveTrain drive,double angle) {
         this.drive = drive;
         this.angle = angle;
-        pid = new PIDController(0.0033,0,0);
+        pid = new PIDController(0.0025,0.0008,0);
         addRequirements(drive);
     }
 
