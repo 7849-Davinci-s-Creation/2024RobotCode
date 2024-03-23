@@ -88,6 +88,8 @@ public class RobotContainer {
       autoMenu.addOption("Test Ramsete Trajectory", Autos.testRamseteExampleTrajectory(driveTrain));
     }
     autoMenu.addOption("LazyBot (do nothing..)", Autos.lazyBot());
+    autoMenu.addOption("Move a bit", Autos.simpleMove(driveTrain));
+    autoMenu.addOption("Shoot", Autos.shootAuto(shooter, intake));
   }
 
   public Command getAutonomousCommand() {
