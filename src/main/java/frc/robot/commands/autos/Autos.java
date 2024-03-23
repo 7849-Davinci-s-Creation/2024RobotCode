@@ -3,7 +3,11 @@ package frc.robot.commands.autos;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Constants;
+import frc.robot.commands.BuiltCommands;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 public class Autos {
     private static SendableChooser<Command> autoMenu = null;
@@ -36,5 +40,9 @@ public class Autos {
 
     public static Command lazyBot() {
         return null;
+    }
+
+    public static Command shootAuto(Shooter shoot, Intake intake) {
+        return BuiltCommands.shootSequence(shoot,intake,Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM);
     }
 }

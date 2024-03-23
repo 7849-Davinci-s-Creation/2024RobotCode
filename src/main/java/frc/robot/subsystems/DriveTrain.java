@@ -198,7 +198,7 @@ public class DriveTrain extends SubsystemBase implements DashboardConfiguration 
     return new DifferentialDriveWheelSpeeds(leftEncoder.getVelocity(), rightEncoder.getVelocity());
   }
 
-  public double getAverageEncoderDistance() {
+  public Double getAverageEncoderDistance() {
     return (getLeftEncoderPosition() + getRightEncoderPosition()) / 2;
   }
 
