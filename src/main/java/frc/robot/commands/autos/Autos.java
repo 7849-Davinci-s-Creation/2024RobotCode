@@ -40,12 +40,12 @@ public class Autos {
         return new SequentialCommandGroup(
             BuiltCommands.shootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),
             new WaitCommand(0.5),
-            new MoveMeters(driveTrain,.273),
+            new MoveMeters(driveTrain,.273, 0, 0, 0),
             new WaitCommand(0.5),
            new RotateAngel(driveTrain, 90),
            new WaitCommand(0.5),
            new ParallelCommandGroup(
-            new MoveMeters(driveTrain,1.0421),
+            new MoveMeters(driveTrain,1.0421, 0, 0, 0),
             BuiltCommands.autonomousIntake(intake)
            ),
            new WaitCommand(0.5)

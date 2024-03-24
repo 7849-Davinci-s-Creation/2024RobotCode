@@ -5,17 +5,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveTrain;
 
 public class MoveMeters extends Command {
-    DriveTrain drive;
-    PIDController forward = new PIDController(0.32, 0.12, 0);
-    PIDController turn = new PIDController(0.0033, 0, 0);
-    double targetMeters;
-    
+    private final DriveTrain drive;
+    private final PIDController forward;
+    private final PIDController turn = new PIDController(0.0033, 0, 0);
+    private final double targetMeters;
 
-
-
-    public MoveMeters(DriveTrain drive,double targetMeters) {
+    public MoveMeters(DriveTrain drive,double targetMeters, double P, double I, double D) {
         this.drive = drive;
         this.targetMeters = targetMeters;
+        this.forward = new PIDController(P, I, D);
         addRequirements(drive);
     }
 
