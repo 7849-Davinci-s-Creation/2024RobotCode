@@ -28,22 +28,6 @@ public class Autos {
         return autoMenu;
     }
 
-    public static Command sysIDQuasistatic(DriveTrain driveTrain, Direction direction) {
-        return driveTrain.getRoutine().quasistatic(direction);
-    }
-
-    public static Command sysIDDynamic(DriveTrain driveTrain, Direction direction) {
-        return driveTrain.getRoutine().dynamic(direction);
-    }
-
-    public static Command testRamseteExampleTrajectory(DriveTrain driveTrain) {
-        return RamseteUtil.testRamseteTrajectory(driveTrain);
-    }
-
-    public static Command testRamsetePathWeaverPath(DriveTrain driveTrain, String pathFile) {
-        return RamseteUtil.loadPathWeaverTrajectoryToRamseteCommand(pathFile, true, driveTrain);
-    }
-
     public static Command lazyBot() {
         return null;
     }
@@ -52,26 +36,6 @@ public class Autos {
         return BuiltCommands.shootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM);
     }
 
-    public static Command simpleMove(DriveTrain driveTrain) {
-        return new MoveMeters(driveTrain, 3);
-    }
-
-    public static Command simpleRotate(DriveTrain driveTrain) {
-        return new RotateAngel(driveTrain, 90);
-    }
-
-    public static Command simpleMovenRotateCommand(DriveTrain driveTrain) {
-        return new SequentialCommandGroup(
-                new MoveMeters(driveTrain, 3),
-                new WaitCommand(0.5),
-                new RotateAngel(driveTrain, 90));
-    }
-    public static Command simpleMoveRotateCommand(DriveTrain driveTrain) {
-        return new SequentialCommandGroup(
-                new RotateAngel(driveTrain, 260),
-                new WaitCommand(0.5),
-                new MoveMeters(driveTrain, -3));
-    }
     public static Command noteAutoRedCenter(DriveTrain driveTrain, Intake intake, Shooter shoot) {
         return new SequentialCommandGroup(
             BuiltCommands.shootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),

@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.drivetrain.AutoTurnaround;
-import frc.robot.commands.autos.Autos;
 import frc.robot.commands.BuiltCommands;
+import frc.robot.commands.autos.Autos;
+import frc.robot.commands.drivetrain.AutoTurnaround;
 import frc.robot.commands.drivetrain.Drive;
+import frc.robot.commands.intake.EatNote;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.shooter.MurderShooter;
 import frc.robot.commands.timedcommands.RunIntakeSeconds;
@@ -68,16 +68,18 @@ public class RobotContainer {
         .whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM))
         .onFalse(new MurderShooter(shooter));
 
-    // Shoot amp
+    // eat note (feeder station feed)
     operatorController.x()
-        .whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.OPTIMAL_AMP_RPM))
-        .onFalse(new MurderShooter(shooter));
+        .whileTrue(new EatNote(intake, shooter))
+        .onFalse(new RunIntakeSeconds(intake, 0.2,
+                -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
 
     // Manuele intake
     operatorController.b().whileTrue(new IntakeCommand(intake))
     .onFalse(new RunIntakeSeconds(intake, 0.2,
      -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
 
+    // debug reset encoders and compass heading
     operatorController.back().onTrue(
       new InstantCommand(
         () -> {
