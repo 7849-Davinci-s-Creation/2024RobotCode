@@ -35,4 +35,5 @@ public class EatNote extends Command {
     public boolean isFinished() {
         return intake.getNoteState(); // check if beam breaker reads we have note
     }
+
 }

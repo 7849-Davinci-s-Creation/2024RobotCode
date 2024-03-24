@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,8 +30,6 @@ public class RotateAngel extends Command {
     @Override
     public void end(boolean interuppted) {
         drive.arcadeDrive(0, 0);
-
-
     }
 
     @Override

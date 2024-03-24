@@ -35,4 +35,5 @@ public  class RevUpShooterSeconds extends Command {
     public boolean isFinished() {
       return System.currentTimeMillis() - startingTime > (seconds * 1000);
     }
+
 }

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.BuiltCommands;
-import frc.robot.commands.autos.Autos;
+import frc.robot.commands.Autos;
 import frc.robot.commands.drivetrain.AutoTurnaround;
 import frc.robot.commands.drivetrain.Drive;
 import frc.robot.commands.intake.EatNote;
@@ -29,14 +29,15 @@ public class RobotContainer {
           Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
   public static final CommandXboxController operatorController = new CommandXboxController(
           Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT);
+
+  private static boolean debugMode = false;
+
   private final SendableChooser<Command> autoMenu = Autos.getAutoMenu();
 
   // Subsystems
   private final DriveTrain driveTrain = new DriveTrain();
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
-
-  private static boolean debugMode = false;
 
   public RobotContainer() {
     // set debug mode true / false
@@ -91,14 +92,11 @@ public class RobotContainer {
   }
 
   private void configureAutoMenu() {
-    if (debugMode) {
-    }
     autoMenu.addOption("LazyBot (do nothing..)", Autos.lazyBot());
     autoMenu.addOption("Red Center Auto", Autos.noteAutoRedCenter(driveTrain,intake,shooter));
   }
 
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return Autos.getAutoMenu().getSelected();
   }
 

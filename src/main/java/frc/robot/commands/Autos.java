@@ -1,15 +1,13 @@
-package frc.robot.commands.autos;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants;
-import frc.robot.commands.BuiltCommands;
-import frc.robot.commands.MoveMeters;
-import frc.robot.commands.RotateAngel;
+import frc.robot.commands.drivetrain.MoveMeters;
+import frc.robot.commands.drivetrain.RotateAngel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
