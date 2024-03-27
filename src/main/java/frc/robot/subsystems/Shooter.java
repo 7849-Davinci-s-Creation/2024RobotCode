@@ -36,6 +36,10 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
         topFlyWheel.set(-1);
     }
 
+    public CANSparkMax getBottomSparkMax() {
+        return this.bottomFlyWheel;
+    }
+
     @Override
     public void periodic() {
         this.configureDashboard();
