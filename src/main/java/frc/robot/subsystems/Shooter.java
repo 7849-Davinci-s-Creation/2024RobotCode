@@ -16,8 +16,6 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
 
     private final RelativeEncoder shooterEncoder = topFlyWheel.getEncoder();
 
-    
-
     private final PIDController shooterPID = new PIDController(Constants.ShooterConstants.P,
             Constants.ShooterConstants.I, Constants.ShooterConstants.D);
 
@@ -36,10 +34,6 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
 
     public void eatNote() {
         topFlyWheel.set(-1);
-    }
-
-    public CANSparkMax getBottomSparkMax() {
-        return this.bottomFlyWheel;
     }
 
     @Override
