@@ -24,8 +24,12 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
         bottomFlyWheel.follow(topFlyWheel);
     }
 
+    public RelativeEncoder getEncoder() {
+        return this.shooterEncoder;
+    }
+
     public void murder() {
-        topFlyWheel.setVoltage(0);
+        topFlyWheel.set(0);
     }
 
     public void shoot(double wantedRPM) {

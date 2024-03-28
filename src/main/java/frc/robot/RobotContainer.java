@@ -93,7 +93,8 @@ public class RobotContainer {
 
   private void configureAutoMenu() {
     autoMenu.addOption("LazyBot (do nothing..)", Autos.lazyBot());
-    autoMenu.addOption("Red Center Auto", Autos.noteAutoRedCenter(driveTrain,intake,shooter));
+    autoMenu.addOption("Shoot Auto", Autos.shootAuto(shooter,intake));
+    autoMenu.addOption("Red Auto", Autos.redAuto(driveTrain,intake,shooter));
   }
 
   public Command getAutonomousCommand() {
@@ -112,6 +113,7 @@ public class RobotContainer {
   }
 
   public void robotPeriodic() {
+    Autos.periodic();
   }
 
   public void disabledInit() {
