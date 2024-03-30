@@ -10,7 +10,7 @@ public class AutoTurnaround extends Command {
 
     public AutoTurnaround(DriveTrain drive) {
         this.drive = drive;
-        this.pid = new PIDController(0.0033,0,0);
+        this.pid = new PIDController(0.0033, 0, 0);
         addRequirements(drive);
     }
 
@@ -21,7 +21,7 @@ public class AutoTurnaround extends Command {
 
     @Override
     public void execute() {
-      drive.arcadeDrive((pid.calculate(drive.getHeading(),180)),0);
+        drive.arcadeDrive((pid.calculate(drive.getHeading(), 180)), 0);
     }
 
     @Override
