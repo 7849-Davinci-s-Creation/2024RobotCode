@@ -48,7 +48,7 @@ public class Autos {
         return BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM);
     }
 
-    public static Command redAuto(DriveTrain driveTrain, Intake intake, Shooter shoot) {
+    public static Command redcenterAuto(DriveTrain driveTrain, Intake intake, Shooter shoot) {
         // shoot note
         // move back 0.46285155415535 meters
         // turn to 21 degrees
@@ -68,7 +68,32 @@ public class Autos {
                 new ParallelCommandGroup(
                         new MoveMetersBackwards(driveTrain, 0.1, 1, 0, 0),
                         BuiltCommands.autoshootSequence(shoot, intake,
-                                Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM))
-                );
+                                Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)));
     }
+
+    public static Command bluecenterAuto(DriveTrain driveTrain, Intake intake, Shooter shoot) {
+        // shoot note
+        // move back 0.46285155415535 meters
+        // turn to 21 degrees
+        // move 0.561 meters back while intaking
+        return new SequentialCommandGroup(
+                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),
+                new MoveMeters(driveTrain, 0.66285155415535, 1, 0, 0),
+                new WaitCommand(0.2),
+                new RotateAngel(driveTrain, 22),
+                new WaitCommand(0.2),
+                new ParallelCommandGroup(
+                        new MoveMeters(driveTrain, 1, 1, 0, 0),
+                        BuiltCommands.autonomousIntake(intake)),
+                new WaitCommand(0.2),
+                new MoveMetersBackwards(driveTrain, 1, 1, 0, 0),
+                new WaitCommand(0.2),
+                new RotateNegativeAngle(driveTrain, -18),
+                new WaitCommand(0.2),
+                new ParallelCommandGroup(
+                        new MoveMetersBackwards(driveTrain, 0.2, 1, 0, 0),
+                        BuiltCommands.autoshootSequence(shoot, intake,
+                                Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)));
+    }
+    //
 }

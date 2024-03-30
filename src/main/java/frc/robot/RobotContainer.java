@@ -94,7 +94,8 @@ public class RobotContainer {
   private void configureAutoMenu() {
     autoMenu.addOption("LazyBot (do nothing..)", Autos.lazyBot());
     autoMenu.addOption("Shoot Auto", Autos.shootAuto(shooter,intake));
-    autoMenu.addOption("Red Auto", Autos.redAuto(driveTrain,intake,shooter));
+    autoMenu.addOption("Red Center Auto", Autos.redcenterAuto(driveTrain,intake,shooter));
+    autoMenu.addOption("Blue Center Auto", Autos.bluecenterAuto(driveTrain,intake,shooter));
   }
 
   public Command getAutonomousCommand() {
