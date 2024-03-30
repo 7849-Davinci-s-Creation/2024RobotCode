@@ -2,18 +2,19 @@ package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
 public class RotateAngel extends Command {
     private final DriveTrain drive;
     private final PIDController pid;
-    double angle;
+    private final double angle;
 
-
-    public RotateAngel(DriveTrain drive,double angle) {
+    public RotateAngel(DriveTrain drive, double angle) {
         this.drive = drive;
         this.angle = angle;
-        pid = new PIDController(0.005,0.01,0.001);
+        pid = new PIDController(Constants.DriveTrainConstants.ROTATE_P, Constants.DriveTrainConstants.ROTATE_I,
+                Constants.DriveTrainConstants.ROTATE_D);
         addRequirements(drive);
     }
 
@@ -24,7 +25,7 @@ public class RotateAngel extends Command {
 
     @Override
     public void execute() {
-      drive.arcadeDrive((pid.calculate(drive.getHeading(),angle)),0);
+        drive.arcadeDrive((pid.calculate(drive.getHeading(), angle)), 0);
     }
 
     @Override

@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.shooter.AutoMurderShooter;
-import frc.robot.commands.shooter.MurderShooter;
 import frc.robot.commands.shooter.ShootCommand;
 import frc.robot.commands.timedcommands.RevUpShooterSeconds;
 import frc.robot.commands.timedcommands.RunIntakeSeconds;
@@ -19,7 +18,8 @@ public class BuiltCommands {
         return new SequentialCommandGroup(
                 new RevUpShooterSeconds(shoot, Constants.ShooterConstants.REV_TIME, rpm),
                 new ParallelCommandGroup(
-                        new RunIntakeSeconds(intake, Constants.IntakeConstants.OUT_SECONDS, Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT),
+                        new RunIntakeSeconds(intake, Constants.IntakeConstants.OUT_SECONDS,
+                                Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT),
                         new ShootCommand(shoot, rpm))
 
         );
@@ -29,18 +29,16 @@ public class BuiltCommands {
         return new SequentialCommandGroup(
                 new RevUpShooterSeconds(shoot, Constants.ShooterConstants.REV_TIME, rpm),
                 new ParallelCommandGroup(
-                        new RunIntakeSeconds(intake, Constants.IntakeConstants.OUT_SECONDS, Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT),
+                        new RunIntakeSeconds(intake, Constants.IntakeConstants.OUT_SECONDS,
+                                Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT),
                         new RevUpShooterSeconds(shoot, 1, rpm),
-                        new WaitCommand(1)
-                        ),
-                        new AutoMurderShooter(shoot)
-                        );
+                        new WaitCommand(1)),
+                new AutoMurderShooter(shoot));
     }
 
     public static Command autonomousIntake(Intake intake) {
         return new SequentialCommandGroup(
                 new IntakeCommand(intake),
-                new RunIntakeSeconds(intake, 0.2, -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT)
-        );
+                new RunIntakeSeconds(intake, 0.2, -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
     }
 }

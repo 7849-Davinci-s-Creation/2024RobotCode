@@ -2,15 +2,16 @@ package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
 public class MoveMetersBackwards extends Command {
     private final DriveTrain drive;
     private final PIDController forward;
-    private final PIDController turn = new PIDController(0.0033, 0, 0);
+    private final PIDController turn = new PIDController(Constants.DriveTrainConstants.TURN_P, 0, 0);
     private final double targetMeters;
 
-    public MoveMetersBackwards(DriveTrain drive,double targetMeters, double P, double I, double D) {
+    public MoveMetersBackwards(DriveTrain drive, double targetMeters, double P, double I, double D) {
         this.drive = drive;
         this.targetMeters = targetMeters;
         this.forward = new PIDController(P, I, D);
@@ -25,13 +26,10 @@ public class MoveMetersBackwards extends Command {
 
     @Override
     public void execute() {
-        double goForward = forward.calculate(drive.getAverageEncoderDistance(),targetMeters);
-        double goRotate = turn.calculate(drive.getHeading(),0);
+        double goForward = forward.calculate(drive.getAverageEncoderDistance(), targetMeters);
+        double goRotate = turn.calculate(drive.getHeading(), 0);
 
-        System.out.println(goForward + " drive power");
-        System.out.println(goRotate + " rotate");
-
-        drive.arcadeDrive(goRotate,-goForward);
+        drive.arcadeDrive(goRotate, -goForward);
     }
 
     @Override
@@ -42,5 +40,5 @@ public class MoveMetersBackwards extends Command {
     @Override
     public boolean isFinished() {
         return Math.abs(drive.getLeftEncoderPosition()) >= targetMeters;
-    }    
+    }
 }

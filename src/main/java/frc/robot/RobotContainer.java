@@ -1,7 +1,6 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -26,9 +25,9 @@ import lib.DashboardManager;
 public class RobotContainer {
   // controllers
   public static final CommandPS4Controller driverController = new CommandPS4Controller(
-          Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
+      Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
   public static final CommandXboxController operatorController = new CommandXboxController(
-          Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT);
+      Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
   private static boolean debugMode = false;
 
@@ -73,29 +72,27 @@ public class RobotContainer {
     operatorController.x()
         .whileTrue(new EatNote(intake, shooter))
         .onFalse(new RunIntakeSeconds(intake, 0.2,
-                -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
+            -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
 
     // Manuele intake
     operatorController.b().whileTrue(new IntakeCommand(intake))
-    .onFalse(new RunIntakeSeconds(intake, 0.2,
-     -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
+        .onFalse(new RunIntakeSeconds(intake, 0.2,
+            -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
 
     // debug reset encoders and compass heading
     operatorController.back().onTrue(
-      new InstantCommand(
-        () -> {
-          driveTrain.zeroHeading();
-          driveTrain.resetEncoders();
-        }
-      )
-    );
+        new InstantCommand(
+            () -> {
+              driveTrain.zeroHeading();
+              driveTrain.resetEncoders();
+            }));
   }
 
   private void configureAutoMenu() {
     autoMenu.addOption("LazyBot (do nothing..)", Autos.lazyBot());
-    autoMenu.addOption("Shoot Auto", Autos.shootAuto(shooter,intake));
-    autoMenu.addOption("Red Center Auto", Autos.redcenterAuto(driveTrain,intake,shooter));
-    autoMenu.addOption("Blue Center Auto", Autos.bluecenterAuto(driveTrain,intake,shooter));
+    autoMenu.addOption("Shoot Auto", Autos.shootAuto(shooter, intake));
+    autoMenu.addOption("Red Center Auto", Autos.redCenterAuto(driveTrain, intake, shooter));
+    autoMenu.addOption("Blue Center Auto", Autos.blueCenterAuto(driveTrain, intake, shooter));
   }
 
   public Command getAutonomousCommand() {

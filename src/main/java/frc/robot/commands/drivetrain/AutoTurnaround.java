@@ -8,9 +8,13 @@ public class AutoTurnaround extends Command {
     private final DriveTrain drive;
     private final PIDController pid;
 
+    private final double P = 0.0033;
+    private final double I = 0;
+    private final double D = 0;
+
     public AutoTurnaround(DriveTrain drive) {
         this.drive = drive;
-        this.pid = new PIDController(0.0033, 0, 0);
+        this.pid = new PIDController(P, I, D);
         addRequirements(drive);
     }
 

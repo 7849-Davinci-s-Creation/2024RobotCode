@@ -13,8 +13,10 @@ import frc.robot.RobotContainer;
 import lib.DashboardConfiguration;
 
 public class Shooter extends SubsystemBase implements DashboardConfiguration {
-    private final CANSparkMax topFlyWheel = new CANSparkMax(Constants.MotorConstants.FLY_WHEEL_TOP, MotorType.kBrushless);
-    private final CANSparkMax bottomFlyWheel = new CANSparkMax(Constants.MotorConstants.FLY_WHEEL_BOTTOM, MotorType.kBrushless);
+    private final CANSparkMax topFlyWheel = new CANSparkMax(Constants.MotorConstants.FLY_WHEEL_TOP,
+            MotorType.kBrushless);
+    private final CANSparkMax bottomFlyWheel = new CANSparkMax(Constants.MotorConstants.FLY_WHEEL_BOTTOM,
+            MotorType.kBrushless);
 
     private final RelativeEncoder shooterEncoder = topFlyWheel.getEncoder();
 
@@ -37,7 +39,7 @@ public class Shooter extends SubsystemBase implements DashboardConfiguration {
     }
 
     public void shoot(double wantedRPM) {
-        topFlyWheel.set(shooterPID.calculate(shooterEncoder.getVelocity(),wantedRPM));
+        topFlyWheel.set(shooterPID.calculate(shooterEncoder.getVelocity(), wantedRPM));
     }
 
     public void eatNote() {

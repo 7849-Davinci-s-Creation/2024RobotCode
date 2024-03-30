@@ -1,9 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -12,7 +10,6 @@ import frc.robot.commands.drivetrain.MoveMeters;
 import frc.robot.commands.drivetrain.MoveMetersBackwards;
 import frc.robot.commands.drivetrain.RotateAngel;
 import frc.robot.commands.drivetrain.RotateNegativeAngle;
-import frc.robot.commands.shooter.MurderShooter;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -21,12 +18,6 @@ public class Autos {
     private static SendableChooser<Command> autoMenu = null;
 
     private Autos() {
-    }
-
-    static {
-        SmartDashboard.putNumber("P", 0);
-        SmartDashboard.putNumber("I", 0);
-        SmartDashboard.putNumber("D", 0);
     }
 
     public static SendableChooser<Command> getAutoMenu() {
@@ -48,7 +39,7 @@ public class Autos {
         return BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM);
     }
 
-    public static Command redcenterAuto(DriveTrain driveTrain, Intake intake, Shooter shoot) {
+    public static Command redCenterAuto(DriveTrain driveTrain, Intake intake, Shooter shoot) {
         // shoot note
         // move back 0.46285155415535 meters
         // turn to 21 degrees
@@ -71,7 +62,7 @@ public class Autos {
                                 Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)));
     }
 
-    public static Command bluecenterAuto(DriveTrain driveTrain, Intake intake, Shooter shoot) {
+    public static Command blueCenterAuto(DriveTrain driveTrain, Intake intake, Shooter shoot) {
         // shoot note
         // move back 0.46285155415535 meters
         // turn to 21 degrees
@@ -95,5 +86,5 @@ public class Autos {
                         BuiltCommands.autoshootSequence(shoot, intake,
                                 Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)));
     }
-    //
+    
 }
