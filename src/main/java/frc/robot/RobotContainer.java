@@ -1,19 +1,19 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.drivetrain.AutoTurnaround;
-import frc.robot.commands.autos.Autos;
 import frc.robot.commands.BuiltCommands;
+import frc.robot.commands.Autos;
+import frc.robot.commands.drivetrain.AutoTurnaround;
 import frc.robot.commands.drivetrain.Drive;
+import frc.robot.commands.intake.EatNote;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.shooter.MurderShooter;
 import frc.robot.commands.timedcommands.RunIntakeSeconds;
@@ -23,20 +23,20 @@ import frc.robot.subsystems.Shooter;
 import lib.DashboardManager;
 
 public class RobotContainer {
+  // controllers
+  public static final CommandPS4Controller driverController = new CommandPS4Controller(
+      Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
+  public static final CommandXboxController operatorController = new CommandXboxController(
+      Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT);
+
+  private static boolean debugMode = false;
+
   private final SendableChooser<Command> autoMenu = Autos.getAutoMenu();
 
   // Subsystems
   private final DriveTrain driveTrain = new DriveTrain();
   private final Intake intake = new Intake();
   private final Shooter shooter = new Shooter();
-
-  private static boolean debugMode = false;
-
-  // controllers
-  private final CommandPS4Controller driverController = new CommandPS4Controller(
-      Constants.OperatorConstants.DRIVER_CONTROLLER_PORT);
-  private final CommandXboxController operatorController = new CommandXboxController(
-      Constants.OperatorConstants.OPERATOR_CONTROLLER_PORT);
 
   public RobotContainer() {
     // set debug mode true / false
@@ -68,30 +68,34 @@ public class RobotContainer {
         .whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM))
         .onFalse(new MurderShooter(shooter));
 
-    // Shoot amp
+    // eat note (feeder station feed)
     operatorController.x()
-        .whileTrue(BuiltCommands.shootSequence(shooter, intake, Constants.ShooterConstants.OPTIMAL_AMP_RPM))
-        .onFalse(new MurderShooter(shooter));
+        .whileTrue(new EatNote(intake, shooter))
+        .onFalse(new RunIntakeSeconds(intake, 0.2,
+            -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
 
-    // Manule intake
-    operatorController.b().whileTrue(new IntakeCommand(intake, shooter, operatorController))
-        .onFalse(new RunIntakeSeconds(intake, 0.5, -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
+    // Manuele intake
+    operatorController.b().whileTrue(new IntakeCommand(intake))
+        .onFalse(new RunIntakeSeconds(intake, 0.2,
+            -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
+
+    // debug reset encoders and compass heading
+    operatorController.back().onTrue(
+        new InstantCommand(
+            () -> {
+              driveTrain.zeroHeading();
+              driveTrain.resetEncoders();
+            }));
   }
 
   private void configureAutoMenu() {
-    if (debugMode) {
-      autoMenu.addOption("Quasistatic Forward", Autos.sysIDQuasistatic(driveTrain, Direction.kForward));
-      autoMenu.addOption("Quasistatic Reverse", Autos.sysIDQuasistatic(driveTrain, Direction.kReverse));
-      autoMenu.addOption("Dynamic Forward", Autos.sysIDDynamic(driveTrain, Direction.kForward));
-      autoMenu.addOption("Dynamic Reverse", Autos.sysIDDynamic(driveTrain, Direction.kReverse));
-
-      autoMenu.addOption("Test Ramsete Trajectory", Autos.testRamseteExampleTrajectory(driveTrain));
-    }
     autoMenu.addOption("LazyBot (do nothing..)", Autos.lazyBot());
+    autoMenu.addOption("Shoot Auto", Autos.shootAuto(shooter, intake));
+    autoMenu.addOption("Red Center Auto", Autos.redCenterAuto(driveTrain, intake, shooter));
+    autoMenu.addOption("Blue Center Auto", Autos.blueCenterAuto(driveTrain, intake, shooter));
   }
 
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return Autos.getAutoMenu().getSelected();
   }
 
@@ -107,8 +111,8 @@ public class RobotContainer {
   }
 
   public void robotPeriodic() {
+    Autos.periodic();
   }
-
 
   public void disabledInit() {
   }

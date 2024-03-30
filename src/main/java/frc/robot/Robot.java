@@ -28,7 +28,6 @@ public class Robot extends TimedRobot {
     robotContainer.robotPeriodic();
   }
 
-
   @Override
   public void disabledInit() {
     robotContainer.disabledInit();
@@ -46,7 +45,7 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
     }
-    
+
     robotContainer.autonomousInit();
   }
 

@@ -2,19 +2,19 @@ package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
-public class AutoTurnaround extends Command {
+public class RotateNegativeAngle extends Command {
     private final DriveTrain drive;
     private final PIDController pid;
+    private final double angle;
 
-    private final double P = 0.0033;
-    private final double I = 0;
-    private final double D = 0;
-
-    public AutoTurnaround(DriveTrain drive) {
+    public RotateNegativeAngle(DriveTrain drive, double angle) {
         this.drive = drive;
-        this.pid = new PIDController(P, I, D);
+        this.angle = Math.abs(angle);
+        pid = new PIDController(Constants.DriveTrainConstants.ROTATE_P, Constants.DriveTrainConstants.ROTATE_I,
+                Constants.DriveTrainConstants.ROTATE_D);
         addRequirements(drive);
     }
 
@@ -25,7 +25,7 @@ public class AutoTurnaround extends Command {
 
     @Override
     public void execute() {
-        drive.arcadeDrive((pid.calculate(drive.getHeading(), 180)), 0);
+        drive.arcadeDrive(-(pid.calculate(drive.getHeading(), angle)), 0);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class AutoTurnaround extends Command {
 
     @Override
     public boolean isFinished() {
-        return drive.getHeading() >= 180;
+        return Math.abs(drive.getHeading()) >= angle;
     }
 
 }
