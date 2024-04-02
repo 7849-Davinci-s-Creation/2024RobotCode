@@ -9,6 +9,7 @@ import frc.robot.Constants;
 import frc.robot.commands.drivetrain.MoveMeters;
 import frc.robot.commands.drivetrain.MoveMetersBackwards;
 import frc.robot.commands.drivetrain.RotateAngel;
+import frc.robot.commands.drivetrain.RotateAngelCustom;
 import frc.robot.commands.drivetrain.RotateNegativeAngle;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -86,5 +87,53 @@ public class Autos {
                         BuiltCommands.autoshootSequence(shoot, intake,
                                 Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)));
     }
+
+    public static Command redAmpside2note(DriveTrain driveTrain, Intake intake, Shooter shoot) {
+        return new SequentialCommandGroup(
+                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),
+                new WaitCommand(0.2),
+                //new MoveMeters(driveTrain, 1, 1, 0, 0),
+                //new WaitCommand(0.2),
+               // new RotateAngel(driveTrain, 9),
+               // new WaitCommand(0.2),
+                new ParallelCommandGroup(
+                    new MoveMeters(driveTrain, 1.85, 1, 0, 0),
+                    BuiltCommands.autonomousIntake(intake)),
+                new WaitCommand(0.2), 
+                new MoveMetersBackwards(driveTrain, 1.35, 1, 0, 0),
+                new WaitCommand(0.2), 
+                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),
+                new WaitCommand(0.2), 
+                new RotateAngelCustom(driveTrain, 9,0.05,0,0), 
+                new WaitCommand(0.2),
+                new MoveMeters(driveTrain,5, 1, 0, 0)
+                );
+            
+    }    
+
+    public static Command blueAmpside2note(DriveTrain driveTrain, Intake intake, Shooter shoot) {
+        return new SequentialCommandGroup(
+                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),
+                new WaitCommand(0.2),
+                new MoveMeters(driveTrain, 0.5, 1, 0, 0),
+                new WaitCommand(0.2),
+                new RotateNegativeAngle(driveTrain, 25),
+                new WaitCommand(0.2),
+                new ParallelCommandGroup(
+                    new MoveMeters(driveTrain, 2, 1, 0, 0),
+                    BuiltCommands.autonomousIntake(intake)),
+                new WaitCommand(0.5), 
+                new MoveMetersBackwards(driveTrain, 1.4, 1, 0, 0),
+                new WaitCommand(0.2), 
+                new RotateAngel(driveTrain, 32),
+                new WaitCommand(0.2), 
+                new MoveMetersBackwards(driveTrain, 0.2, 1, 0, 0),
+                new WaitCommand(0.2), 
+                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)
+                // new WaitCommand(0.2)
+                );
+            
+    }    
+
     
 }

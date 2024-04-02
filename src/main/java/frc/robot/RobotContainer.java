@@ -93,6 +93,9 @@ public class RobotContainer {
     autoMenu.addOption("Shoot Auto", Autos.shootAuto(shooter, intake));
     autoMenu.addOption("Red Center Auto", Autos.redCenterAuto(driveTrain, intake, shooter));
     autoMenu.addOption("Blue Center Auto", Autos.blueCenterAuto(driveTrain, intake, shooter));
+    autoMenu.addOption("Red Amp Side 2Note Auto", Autos.redAmpside2note(driveTrain, intake, shooter));
+    autoMenu.addOption("Blue Amp Side 2Note Auto", Autos.blueAmpside2note(driveTrain, intake, shooter));
+    
   }
 
   public Command getAutonomousCommand() {
