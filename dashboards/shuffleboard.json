@@ -71,46 +71,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "4,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Gyro Heading",
-              "_title": "Gyro Heading",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "5,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Left Encoder Value (feet)",
-              "_title": "Left Encoder Value (feet)",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
           "8,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/shooter RPM",
-              "_title": "shooter RPM",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "7,0": {
             "size": [
               1,
               1
@@ -125,9 +86,9 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "6,0": {
+          "4,0": {
             "size": [
-              1,
+              4,
               1
             ],
             "content": {
@@ -146,7 +107,7 @@
             "content": {
               "_type": "Camera Stream",
               "_source0": "camera_server://photonvision_Port_1182_Output_MJPEG_Server",
-              "_title": "photonvision_Port_1182_Output_MJPEG_Server",
+              "_title": "Back Camera",
               "_glyph": 148,
               "_showGlyph": false,
               "Crosshair/Show crosshair": false,
@@ -167,7 +128,7 @@
             "content": {
               "_type": "Camera Stream",
               "_source0": "camera_server://photonvision_Port_1184_Output_MJPEG_Server",
-              "_title": "photonvision_Port_1184_Output_MJPEG_Server",
+              "_title": "Intake Camera",
               "_glyph": 148,
               "_showGlyph": false,
               "Crosshair/Show crosshair": false,
