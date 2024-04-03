@@ -40,7 +40,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     // set debug mode true / false
-    setDebugMode(true);
+    setDebugMode(false);
 
     // Configure the button bindings
     configureButtonBindings();
