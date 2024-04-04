@@ -115,22 +115,27 @@ public class Autos {
         return new SequentialCommandGroup(
                 BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),
                 new WaitCommand(0.2),
-                new MoveMeters(driveTrain, 0.5, 1, 0, 0),
+                new MoveMeters(driveTrain, 0.7, 1, 0, 0),
                 new WaitCommand(0.2),
                 new RotateNegativeAngle(driveTrain, 25),
                 new WaitCommand(0.2),
                 new ParallelCommandGroup(
-                    new MoveMeters(driveTrain, 2, 1, 0, 0),
-                    BuiltCommands.autonomousIntake(intake)),
-                new WaitCommand(0.5), 
-                new MoveMetersBackwards(driveTrain, 1.4, 1, 0, 0),
+                    new MoveMeters(driveTrain, 2.1, 1, 0, 0),
+                    BuiltCommands.autonomousIntake(intake),
+                    new WaitCommand(2)
+                    ),
+                new WaitCommand(0.2),
+                new MoveMetersBackwards(driveTrain, 1, 1, 0, 0),
                 new WaitCommand(0.2), 
-                new RotateAngel(driveTrain, 32),
+                new RotateAngel(driveTrain, 43),
+                new WaitCommand(0.4), 
+                new MoveMetersBackwards(driveTrain, 0.87, 1, 0, 0),
                 new WaitCommand(0.2), 
-                new MoveMetersBackwards(driveTrain, 0.2, 1, 0, 0),
-                new WaitCommand(0.2), 
-                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)
-                // new WaitCommand(0.2)
+                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),
+                new MoveMeters(driveTrain, 1, 1, 0, 0),
+                new RotateNegativeAngle(driveTrain, 19.5),
+                new WaitCommand(0.2),
+                new MoveMeters(driveTrain,5, 1, 0, 0)
                 );
             
     }    
