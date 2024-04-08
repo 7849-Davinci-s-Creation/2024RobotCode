@@ -36,8 +36,12 @@ public class Autos {
         return null;
     }
 
-    public static Command shootAuto(Shooter shoot, Intake intake) {
-        return BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM);
+    public static Command shootAuto(Shooter shoot, Intake intake,DriveTrain driveTrain) {
+        return new SequentialCommandGroup(
+            BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),
+            new WaitCommand(10),
+            new MoveMeters(driveTrain, 2, 1, 0, 0)
+        );
     }
 
     public static Command redCenterAuto(DriveTrain driveTrain, Intake intake, Shooter shoot) {
@@ -80,10 +84,10 @@ public class Autos {
                 new WaitCommand(0.2),
                 new MoveMetersBackwards(driveTrain, 1, 1, 0, 0),
                 new WaitCommand(0.2),
-                new RotateNegativeAngle(driveTrain, -18),
+                new RotateNegativeAngle(driveTrain, -16),
                 new WaitCommand(0.2),
                 new ParallelCommandGroup(
-                        new MoveMetersBackwards(driveTrain, 0.2, 1, 0, 0),
+                        new MoveMetersBackwards(driveTrain, 0.5, 1, 0, 0),
                         BuiltCommands.autoshootSequence(shoot, intake,
                                 Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)));
     }
@@ -138,7 +142,52 @@ public class Autos {
                 new MoveMeters(driveTrain,5, 1, 0, 0)
                 );
             
+    }  
+    
+    public static Command redAmpside2noteNoDriveOff(DriveTrain driveTrain, Intake intake, Shooter shoot) {
+        return new SequentialCommandGroup(
+                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),
+                new WaitCommand(0.2),
+                //new MoveMeters(driveTrain, 1, 1, 0, 0),
+                //new WaitCommand(0.2),
+               // new RotateAngel(driveTrain, 9),
+               // new WaitCommand(0.2),
+                new ParallelCommandGroup(
+                    new MoveMeters(driveTrain, 1.85, 1, 0, 0),
+                    BuiltCommands.autonomousIntake(intake)),
+                new WaitCommand(0.2), 
+                new MoveMetersBackwards(driveTrain, 1.35, 1, 0, 0),
+                new WaitCommand(0.2), 
+                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)
+                );
+            
     }    
+
+    public static Command blueAmpside2noteNoDriveOff(DriveTrain driveTrain, Intake intake, Shooter shoot) {
+        return new SequentialCommandGroup(
+                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM),
+                new WaitCommand(0.2),
+                new MoveMeters(driveTrain, 0.7, 1, 0, 0),
+                new WaitCommand(0.2),
+                new RotateNegativeAngle(driveTrain, 25),
+                new WaitCommand(0.2),
+                new ParallelCommandGroup(
+                    new MoveMeters(driveTrain, 2.1, 1, 0, 0),
+                    BuiltCommands.autonomousIntake(intake),
+                    new WaitCommand(2)
+                    ),
+                new WaitCommand(0.2),
+                new MoveMetersBackwards(driveTrain, 1, 1, 0, 0),
+                new WaitCommand(0.2), 
+                new RotateAngel(driveTrain, 43),
+                new WaitCommand(0.4), 
+                new MoveMetersBackwards(driveTrain, 0.87, 1, 0, 0),
+                new WaitCommand(0.2), 
+                BuiltCommands.autoshootSequence(shoot, intake, Constants.ShooterConstants.OPTIMAL_SPEAKER_RPM)
+                );
+            
+    }  
+    
 
     
 }
