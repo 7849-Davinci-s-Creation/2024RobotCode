@@ -39,6 +39,6 @@ public class BuiltCommands {
     public static Command autonomousIntake(Intake intake) {
         return new SequentialCommandGroup(
                 new IntakeCommand(intake),
-                new RunIntakeSeconds(intake, 0.2, -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
+                new RunIntakeSeconds(intake, 0.1, -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
     }
 }

@@ -71,12 +71,12 @@ public class RobotContainer {
     // eat note (feeder station feed)
     operatorController.x()
         .whileTrue(new EatNote(intake, shooter))
-        .onFalse(new RunIntakeSeconds(intake, 0.2,
+        .onFalse(new RunIntakeSeconds(intake, 0.1,
             -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
 
     // Manuele intake
     operatorController.b().whileTrue(new IntakeCommand(intake))
-        .onFalse(new RunIntakeSeconds(intake, 0.2,
+        .onFalse(new RunIntakeSeconds(intake, 0.1,
             -Constants.IntakeConstants.INTAKE_GENERAL_PERCENT_OUTPUT));
 
     // debug reset encoders and compass heading
@@ -90,12 +90,13 @@ public class RobotContainer {
 
   private void configureAutoMenu() {
     autoMenu.addOption("LazyBot (do nothing..)", Autos.lazyBot());
-    autoMenu.addOption("Shoot Auto", Autos.shootAuto(shooter, intake));
+    autoMenu.addOption("Shoot Auto", Autos.shootAuto(shooter, intake, driveTrain));
     autoMenu.addOption("Red Center Auto", Autos.redCenterAuto(driveTrain, intake, shooter));
     autoMenu.addOption("Blue Center Auto", Autos.blueCenterAuto(driveTrain, intake, shooter));
     autoMenu.addOption("Red Amp Side 2Note Auto", Autos.redAmpside2note(driveTrain, intake, shooter));
     autoMenu.addOption("Blue Amp Side 2Note Auto", Autos.blueAmpside2note(driveTrain, intake, shooter));
-    
+    autoMenu.addOption("Blue Amp Side 2Note No Drive Off Auto", Autos.blueAmpside2noteNoDriveOff(driveTrain, intake, shooter));
+    autoMenu.addOption("Red Amp Side 2Note No Drive Off Auto", Autos.redAmpside2noteNoDriveOff(driveTrain, intake, shooter));
   }
 
   public Command getAutonomousCommand() {
